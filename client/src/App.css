@@ -41,3 +41,13 @@
   cursor: pointer;
   background-color: #51576173;
 }
+
+.linkClean {
+  color: inherit;
+  text-decoration: none;
+}
+
+.linkClean:hover {
+  cursor: pointer;
+  color: gray
+}
