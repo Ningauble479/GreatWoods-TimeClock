@@ -1,5 +1,5 @@
-import { Grid, Box, Typography, TextField, Button, Switch, FormControlLabel, Radio, RadioGroup } from '@material-ui/core'
-import { useState } from 'react'
+import { Grid, Box, Typography, TextField, Button, Switch, FormControlLabel, Radio, RadioGroup, Table, TableHead, TableRow, TableCell, TableBody } from '@material-ui/core'
+import { useEffect, useState } from 'react'
 import axios from '../../scripts/axiosScripts'
 
 export default function CreateAccount () {
@@ -8,6 +8,7 @@ export default function CreateAccount () {
     let [password, setPassword] = useState(null)
     let [jobtitle, setJobTitle] = useState('Floor')
     let [admin, setAdmin] = useState(false)
+    let [workers, setWorkers] = useState(null)
     let sendData = async () => {
         let data = await axios('post', '/api/admin/addUser', {username, password, jobtitle, admin})
         console.log(data)
@@ -21,10 +22,20 @@ export default function CreateAccount () {
         setJobTitle(e.target.value)
     }
 
+    const getWorkers = async () => {
+        let {data} = await axios('get', '/api/admin/getAccounts')
+        console.log(data)
+        setWorkers(data.data)
+    }
+
+    useEffect(()=>{
+        getWorkers()
+    },[])
+
 
     return (
-        <Grid style={{height: '100vh'}} container direction="column" justifyContent="center" alignItems="center">
-            <Box bgcolor='gray' borderRadius='25px' width='25vw' height='50vh' border='1px solid black'>
+        <Grid style={{height: '90vh', overflowX: 'hidden'}} container direction="column">
+            <Box bgcolor='gray' width='50vw' height='90vh' border='1px solid black'>
                 <Box display='flex' container flexDirection="column" justifyContent="center" alignItems="center" nowrap style={{height: '100%'}}>
                     <Box height='10%' pt={3}><Typography>Add A Worker</Typography></Box>
                     <Box height='75%'>
@@ -46,6 +57,29 @@ export default function CreateAccount () {
                         </form>
                     </Box>
                 </Box>
+            </Box>
+            <Box width='50vw'>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>
+                                Name
+                            </TableCell>
+                            <TableCell>
+                                Title
+                            </TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {
+                            !workers ? null : workers.map((row)=>{return (
+                                <TableRow>
+                                    <TableCell>{row.userName}</TableCell>
+                                    <TableCell>{row.jobTitle}</TableCell>
+                                </TableRow>
+                            )})}
+                    </TableBody>
+                </Table>
             </Box>
         </Grid>
     )

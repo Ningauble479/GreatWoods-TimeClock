@@ -6,6 +6,7 @@ import {
   } from "react-router-dom";
 import CreateAccount from "./createAccounts";
 import CreateFolderTemplates from "./createFolderTemplates";
+import CreateJob from "./createJob";
 
 
 export default function AdminMain () {
@@ -17,6 +18,9 @@ export default function AdminMain () {
         </Route>
         <Route path='/admin/folderTemplates'>
             <CreateFolderTemplates/>
+        </Route>
+        <Route path='/admin/createJobs'>
+            <CreateJob/>
         </Route>
         </Box>
     )
