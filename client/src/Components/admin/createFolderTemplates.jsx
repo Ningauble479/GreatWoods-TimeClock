@@ -108,11 +108,12 @@ export default function CreateFolderTemplates () {
                         <TextField id="filled-basic" label="Folder Name" variant="filled" onChange={(e)=>{setNewFolder(e.target.value)}} />
                         </TableCell>
                         <TableCell>
+                        </TableCell>
+                        <TableCell>
                             <Button onClick={()=>{createNewFolder()}}>
                                 Create
                             </Button>
                         </TableCell>
-                        <TableCell></TableCell>
                     </TableRow>
                     <TableRow>
                         <TableCell><TextField id="filled-basic" label="Template Name" variant="filled" onChange={(e)=>{setTemplateName(e.target.value)}} /></TableCell>

@@ -5,11 +5,14 @@ const GA = require('./getAccounts')
 const ST = require('./createFolderTemplates')
 const GT = require('./getTemplates')
 const CJ = require('./createJob')
+const GJ = require('./getJobs')
 
 routes.post('/addUser', AU)
-routes.get('/getAccounts', GA)
+routes.post('/getAccounts', GA)
 routes.post('/setTemplate', ST)
 routes.get('/getTemplates', GT)
 routes.post('/createJob', CJ)
+routes.post('/getJobs', GJ)
+
 
 module.exports = routes;

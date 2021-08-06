@@ -79,6 +79,7 @@ export default function CreateJob () {
                             </Box>
                         </form>
                     </Box>
+                    <Button onClick={sendData}>Create Job</Button>
                 </Box>
             </Box>
             <Box width='50vw'>

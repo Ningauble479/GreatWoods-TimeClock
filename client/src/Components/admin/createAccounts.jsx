@@ -23,7 +23,7 @@ export default function CreateAccount () {
     }
 
     const getWorkers = async () => {
-        let {data} = await axios('get', '/api/admin/getAccounts')
+        let {data} = await axios('post', '/api/admin/getAccounts')
         console.log(data)
         setWorkers(data.data)
     }
