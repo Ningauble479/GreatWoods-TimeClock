@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const jobTemplateSchema = new Schema({
@@ -13,4 +13,6 @@ const jobTemplateSchema = new Schema({
 });
 
 
-module.exports = mongoose.model("jobTemplates", jobTemplateSchema);
+let jobTemplates = mongoose.model("jobTemplates", jobTemplateSchema);
+
+export default jobTemplates

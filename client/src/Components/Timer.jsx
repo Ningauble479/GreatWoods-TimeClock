@@ -12,7 +12,7 @@ export default function Timer (props) {
         start,
         pause,
         reset,
-      } = useStopwatch({ autoStart: false });
+      } = useStopwatch({ autoStart: true });
 
 
     return (

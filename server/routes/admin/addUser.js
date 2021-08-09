@@ -1,6 +1,6 @@
-const users = require('../../models/users')
+import users from '../../models/users.js'
 
-module.exports = async (req,res) => {
+export default async (req,res) => {
     console.log('test')
     let newUser = new users()
 

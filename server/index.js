@@ -1,13 +1,14 @@
-var express = require("express");
-var session = require("express-session");
-var routes = require('./routes')
-var app = express();
-var port = process.env.PORT || 3001;
-var cors = require('cors')
-var bodyParser = require('body-parser');
-var passport = require("./routes/passport");
-var cookieparser = require('cookie-parser')
-const mongoose = require('mongoose')
+import express from "express";
+import session from "express-session";
+import routes from './routes/index.js'
+const app = express();
+const port = process.env.PORT || 3001;
+import cors from 'cors'
+import bodyParser from 'body-parser';
+// import passportConfig from "./routes/passport.cjs";
+import cookieparser from 'cookie-parser'
+import mongoose from 'mongoose'
+// import passport from 'passport'
 const dbRoute = 'mongodb+srv://Ningauble:Jakeybear5@reptileisland.xkr6d.gcp.mongodb.net/GreatWoods?retryWrites=true&w=majority'
 app.use(cookieparser())
 app.use(bodyParser.json());
@@ -22,8 +23,7 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
     next();
 });
-app.use(passport.initialize());
-app.use(passport.session());
+// passportConfig(app)
 
 app.use('/api', routes);
 
@@ -43,7 +43,7 @@ mongoose.connect(dbRoute, {
     });
 
 
-var path = require("path");
+import path from "path";
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "./client/build")));
 

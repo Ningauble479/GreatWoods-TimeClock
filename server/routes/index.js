@@ -1,9 +1,11 @@
-const express = require('express');
-const router = express.Router();
-const Files = require('./files')
-const admin = require('./admin')
+import express from 'express';
+let router = express.Router();
+import Files from './files/index.js'
+import admin from './admin/index.js'
+import timeClock from './timeClock/index.js'
 
 router.use('/files', Files)
 router.use('/admin', admin)
+router.use('/timeClock', timeClock)
 
-module.exports = router;
+export default router;

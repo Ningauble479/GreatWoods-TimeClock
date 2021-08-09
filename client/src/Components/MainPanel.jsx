@@ -13,6 +13,13 @@ export default function MainPanel() {
     let [warning, setWarning] = useState(null)
     let [names, setNames] = useState(null)
     let [jobs, setJobs] = useState(null)
+    let [id, setID] = useState(null)
+
+
+    const timeClockHandler = async () => {
+        axiosScript('post', '/api/timeClock/newClock', {id: id})
+    }
+
 
     let startTimer = () => {
         let warningString = ''
@@ -21,7 +28,9 @@ export default function MainPanel() {
         setWarning(warningString)
         if(job && name) {
             setWarning(null)
-            setTimer(true)}
+            setTimer(true)
+            timeClockHandler()
+        }
     }
 
     let getUsers = async () => {
@@ -46,7 +55,9 @@ export default function MainPanel() {
         <Box p={5} borderBottom='1px solid black' display='flex' flexDirection='row' justifyContent='space-around' alignContent='space-between'>
         {!names ? <div>Loading...</div> : names.map((row)=>{return(
             <Box>
-                <Button color={ name === row.userName ? 'success' : 'primary'} variant='contained' onClick={(e)=>{setName(row.userName)}}>
+                <Button color={ name === row.userName ? 'success' : 'primary'} variant='contained' onClick={(e)=>{
+                    setName(row.userName)
+                    setID(row._id)}}>
                 {row.userName}
                 </Button>
             </Box>
@@ -65,7 +76,7 @@ export default function MainPanel() {
         <Box color='red' mt={5}><Typography variant='h4'>{!warning ? null : warning}</Typography></Box>
         <Box display='flex' height='100%' justifyContent='space-between' borderTop='1px solid black'>
             {timer ? <Timer width='50%' job={job} name={name}/> : null}
-            {timer ? <FileView/> : null}
+            {timer ? <FileView job={job}/> : null}
 
         </Box>
     </Box>

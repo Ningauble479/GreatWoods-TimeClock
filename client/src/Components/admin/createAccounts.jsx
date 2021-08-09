@@ -9,6 +9,9 @@ export default function CreateAccount () {
     let [jobtitle, setJobTitle] = useState('Floor')
     let [admin, setAdmin] = useState(false)
     let [workers, setWorkers] = useState(null)
+
+
+    
     let sendData = async () => {
         let data = await axios('post', '/api/admin/addUser', {username, password, jobtitle, admin})
         console.log(data)

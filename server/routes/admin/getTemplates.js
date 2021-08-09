@@ -1,6 +1,6 @@
-let jobTemplates = require('../../models/jobTemplates')
+import jobTemplates from '../../models/jobTemplates.js'
 
-module.exports = async (req,res) => {
+export default async (req,res) => {
     let data = await jobTemplates.find()
     return res.json({success: true, data: data})
 }

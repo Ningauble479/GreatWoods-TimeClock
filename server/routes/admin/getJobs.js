@@ -1,8 +1,8 @@
 
-const jobs = require('../../models/jobs')
+import jobs from '../../models/jobs.js'
 
 
-module.exports = async ( req,res ) => {
+export default async ( req,res ) => {
     
     let data = await jobs.find(req.body.args)
     return res.json({success: true, data: data})

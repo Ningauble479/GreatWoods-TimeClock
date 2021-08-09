@@ -1,6 +1,6 @@
-let users = require('../../models/users')
+import users from '../../models/users.js'
 
-module.exports = async (req,res) => {
+export default async (req,res) => {
     try {
     let data = await users.find(req.body.arg)
     return res.json({success: true, data: data})

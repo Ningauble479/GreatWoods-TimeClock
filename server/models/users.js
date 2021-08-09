@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const { Schema } = mongoose;
-const bcrypt = require('bcryptjs')
+import bcrypt from 'bcryptjs'
 const SALT_WORK_FACTOR = 10;
 
 const userSchema = new Schema({
@@ -10,7 +10,6 @@ const userSchema = new Schema({
   admin: Boolean,
   clockedIn: Boolean
 });
-
 
 
 userSchema.pre('save', function(next) {
@@ -34,4 +33,6 @@ userSchema.pre('save', function(next) {
   });
 });
 
-module.exports = mongoose.model("users", userSchema);
+let users = mongoose.model("users", userSchema);
+
+export default users

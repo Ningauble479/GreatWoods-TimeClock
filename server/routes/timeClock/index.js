@@ -1,7 +1,7 @@
-var express = require('express')
+import express from 'express'
 var routes = express.Router()
-const ATC = require('./addTimeClock')
+import ATC from'./addTimeClock.js'
 
-routes.post('/addTimeClock', ATC)
+routes.post('/newClock', ATC)
 
-module.exports = routes;
+export default routes;

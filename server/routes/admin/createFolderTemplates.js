@@ -1,6 +1,6 @@
-let jobTemplates = require('../../models/jobTemplates')
+import jobTemplates from '../../models/jobTemplates.js'
 
-module.exports = async (req,res) => {
+export default async (req,res) => {
 
     let newTemplate = new jobTemplates()
 

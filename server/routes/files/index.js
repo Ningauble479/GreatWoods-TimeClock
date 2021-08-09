@@ -1,11 +1,13 @@
-var express = require('express')
+import express from 'express'
 var routes = express.Router()
-const GFP = require('./getFilesPaths')
-const GF = require('./viewJobFolder')
-const GetFile = require('./getFile')
+import GFP from './getFilesPaths.js'
+import GF from './viewJobFolder.js'
+import GetFile from './getFile.js'
+import GJF from './getJobFolders.js'
 
 routes.get('/getFilePaths', GFP)
 routes.post('/getFiles', GF)
 routes.post('/getFile', GetFile)
+routes.post('/getJobFolders', GJF)
 
-module.exports = routes;
+export default routes;

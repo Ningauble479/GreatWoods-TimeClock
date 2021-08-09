@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const timeSheetDaysSchema = new Schema({
@@ -8,4 +8,6 @@ const timeSheetDaysSchema = new Schema({
 });
 
 
-module.exports = mongoose.model("timeSheetDays", timeSheetDaysSchema);d
+let timeSheetDays = mongoose.model("timeSheetDays", timeSheetDaysSchema);
+
+export default timeSheetDays

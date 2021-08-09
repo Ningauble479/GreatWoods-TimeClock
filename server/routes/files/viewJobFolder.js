@@ -1,6 +1,6 @@
-const fs = require('fs')
+import fs from 'fs'
 
-module.exports = (req,res) => {
+export default (req,res) => {
     console.log(req.body)
     try {
         fs.readdir(`./jobs/${req.body.folder}`, (err, files)=>{

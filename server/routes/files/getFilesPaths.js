@@ -1,6 +1,6 @@
-const fs = require('fs')
+import fs from 'fs'
 
-module.exports = async (req,res) => {
+export default async (req,res) => {
 try {
     fs.readdir('./jobs', (err, files)=>{
         if(err) return console.log(err)

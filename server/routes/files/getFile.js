@@ -1,13 +1,24 @@
 
-const fs = require('fs')
+import fs from 'fs'
 
 
-module.exports = async (req,res) => {
+export default async (req,res) => {
     console.log(req.body)
+    let data = fs.lstatSync(`./${req.body.path}`).isDirectory()
+    console.log(data)
+    if(fs.lstatSync(`./${req.body.path}`).isDirectory()){
+        try {
+            let data = fs.readdirSync(`./${req.body.path}`)
+            console.log(data)
+            return res.json({success: true, type: 'dir', folders: data})
+        } catch (err) {
+            return res.json({success: false, err: err})
+        }
+    }
     try {
-        const data = await fs.readFileSync(`jobs/${req.body.currentFolder}/${req.body.file}`)
+        const data = await fs.readFileSync(`./${req.body.path}`)
         console.log(data)
-        return res.json({success: true, data: data})
+        return res.json({success: true, type: 'file', data: data})
     } catch (err) {
         console.log(err)
     }
