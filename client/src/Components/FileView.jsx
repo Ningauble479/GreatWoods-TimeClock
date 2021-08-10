@@ -57,7 +57,7 @@ export default function FileView (props) {
     },[])
 
     return (
-        <Box pt={5} width='50%' borderLeft='1px solid black'>
+        <Box pt={5} width='100%' mt={5} paddingBottom='500px' borderTop='1px solid black'>
             <Button onClick={()=>{backToTop()}}>Back</Button>
             <Typography variant='h2'>
                 Files

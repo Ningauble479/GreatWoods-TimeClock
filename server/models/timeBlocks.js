@@ -2,7 +2,8 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const timeBlocksSchema = new Schema({
-  job: { type: Schema.Types.ObjectId, ref: 'jobs' },
+  user: { type: Schema.Types.ObjectId, ref: 'users' },
+  job: String,
   times: [String],
   time: String
 });
