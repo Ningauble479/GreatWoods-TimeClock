@@ -1,7 +1,10 @@
 import { Box, Button, Typography } from '@material-ui/core'
 import { useState } from 'react';
 import { useStopwatch } from 'react-timer-hook';
-import { format, formatDistanceToNowStrict } from 'date-fns'
+import { differenceInMinutes, format, formatDistanceToNowStrict } from 'date-fns'
+import axiosScript from '../scripts/axiosScripts';
+import { differenceInSeconds } from 'date-fns/esm';
+
 export default function Timer (props) {
 
     let [startTime, setStartTime] = useState(null)
@@ -21,12 +24,19 @@ export default function Timer (props) {
       } = useStopwatch({ autoStart: false });
 
       let updateTimeClock = async (timeStart, timeEnd) => {
-        let times = `${format(startTime, "h ':' m ':' s bbb")} - ${timeEnd}`
-        let howLong = formatDistanceToNowStrict(startTime)
+        let times = await `${format(startTime, "h ':' m ':' s bbb")} - ${timeEnd}`
+        console.log(times)
+        let time = {
+          hours: hours,
+          minutes: minutes,
+          seconds: seconds
+          
+        }
+        console.log(time)
         setHowLong(howLong)
         setFinishedTime(times)
-        // let data = await axiosScript('post', '/api/timeClock/updateBlock', {time: time, times: times, job: job})
-        console.log('test')
+        let data = await axiosScript('post', '/api/timeClock/updateBlock', {time: time, times: times, job: props.job, task: props.task, id: props.id})
+        console.log(data)
     }
 
       let handleStart = () => {
@@ -44,6 +54,7 @@ export default function Timer (props) {
         pause()
         setFinished(true)
         updateTimeClock(startTime, date)
+        props.endTimer()
       }
 
 

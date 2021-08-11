@@ -4,8 +4,13 @@ const { Schema } = mongoose;
 const timeBlocksSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'users' },
   job: String,
-  times: [String],
-  time: String
+  task: String,
+  times: String,
+  time: {
+    hours: Number,
+    minutes: Number,
+    seconds: Number
+  }
 });
 
 
