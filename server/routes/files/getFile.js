@@ -3,13 +3,9 @@ import fs from 'fs'
 
 
 export default async (req,res) => {
-    console.log(req.body)
-    let data = fs.lstatSync(`./${req.body.path}`).isDirectory()
-    console.log(data)
     if(fs.lstatSync(`./${req.body.path}`).isDirectory()){
         try {
             let data = fs.readdirSync(`./${req.body.path}`)
-            console.log(data)
             return res.json({success: true, type: 'dir', folders: data})
         } catch (err) {
             return res.json({success: false, err: err})

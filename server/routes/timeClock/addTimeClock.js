@@ -5,10 +5,9 @@ import {startOfWeek, endOfWeek, format} from 'date-fns'
 
 
 let createNewTimeBlock = async (id, job, dayID, task) => {
+    console.log(task)
     let data = await timeBlock.findOne({$and: [{user: id}, {job: job}, {task: task}]})
-    console.log(data)
     if(!data){
-    console.log('got here')
     let newTimeStamp = new timeBlock()
     newTimeStamp.user = id
     newTimeStamp.job = job
@@ -22,8 +21,10 @@ let createNewTimeBlock = async (id, job, dayID, task) => {
     newTimeStamp.save((err, data)=>{
         if(err) console.log(err)
         if(err) return {success: false, err: err}
-        timeSheetDays.findOneAndUpdate({_id: dayID}, {$push: {blocks: data._id}}).exec((err)=>{
+        console.log(dayID)
+        timeSheetDays.findOneAndUpdate({_id: dayID}, {$push: {blocks: data._id}}).exec((err, data2)=>{
             if(err) return {success: false, err: err}
+            console.log({updated: data2})
             return {success: true, msg: 'Time Stamp Created!'}
         })
     })
@@ -61,7 +62,7 @@ export default async (req,res) => {
             let response = await createNewDay(req.body.id, data._id, req.body.job, req.body.task)
             return res.json(response)
         } else {
-            let response = await createNewTimeBlock(req.body.id, req.body.job, data._id, req.body.task)
+            let response = await createNewTimeBlock(req.body.id, req.body.job, day._id, req.body.task)
             return res.json(response)
         }
     }

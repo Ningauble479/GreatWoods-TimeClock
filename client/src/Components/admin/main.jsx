@@ -7,6 +7,7 @@ import {
 import CreateAccount from "./createAccounts";
 import CreateFolderTemplates from "./createFolderTemplates";
 import CreateJob from "./createJob";
+import CheckTimeSheets from "./checkTimeSheetsMain";
 
 
 export default function AdminMain () {
@@ -21,6 +22,9 @@ export default function AdminMain () {
         </Route>
         <Route path='/admin/createJobs'>
             <CreateJob/>
+        </Route>
+        <Route path='/admin/checkTimeSheet'>
+            <CheckTimeSheets/>
         </Route>
         </Box>
     )

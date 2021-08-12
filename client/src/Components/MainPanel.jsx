@@ -31,7 +31,7 @@ export default function MainPanel() {
         if(!name) warningString = warningString + ' Please Select a name'
         if(!task) warningString = warningString + ' Please Select a task'
         setWarning(warningString)
-        if(job && name) {
+        if(job && name && task) {
             setWarning(null)
             setTimer(true)
             timeClockHandler()
@@ -70,6 +70,7 @@ export default function MainPanel() {
         {!names ? <div>Loading...</div> : names.map((row)=>{return(
             <Box>
                 <Button color={ name === row.userName ? 'success' : 'primary'} variant='contained' style={{width: '200px', height: '200px', fontSize: '30px'}} onClick={(e)=>{
+                    if(timer)return
                     setName(row.userName)
                     setID(row._id)}}>
                 {row.userName}
