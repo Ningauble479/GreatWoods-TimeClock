@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "concurrently": "^6.2.0",
+    "date-fns": "^2.23.0",
+    "nodemon": "^2.0.12"
+  },
+  "scripts": {
+    "dev": "concurrently \"cd Server && nodemon index.js\" \"cd client && npm start\""
+  }
+}
