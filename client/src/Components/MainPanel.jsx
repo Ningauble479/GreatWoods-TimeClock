@@ -50,7 +50,7 @@ export default function MainPanel() {
     }
 
     const getTasks = async (job) => {
-        let {data} = await axiosScript('post', 'http://localhost:3001/api/files/getJobFolders', {job: job})
+        let {data} = await axiosScript('post', 'api/files/getJobFolders', {job: job})
         setTasks(data.folders)
     }
 
