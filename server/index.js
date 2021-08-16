@@ -2,7 +2,7 @@ import express from "express";
 import session from "express-session";
 import routes from './routes/index.js'
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 50000;
 import cors from 'cors'
 import bodyParser from 'body-parser';
 // import passportConfig from "./routes/passport.cjs";
