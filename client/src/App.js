@@ -13,17 +13,17 @@ function App() {
   let [ loggedIn, setLoggedIn ] = useState(true)
   return (
     <div className="App">
-      <Route path='/main'>
+      <Route path={`${process.env.PUBLIC_URL}/main`}>
         <MainPanel/>
       </Route>
-      <Route path='/admin'>
+      <Route path={`${process.env.PUBLIC_URL}/admin`}>
         <AdminMain/>
       </Route>
-      <Route path='/login'>
+      <Route path={`${process.env.PUBLIC_URL}/login`}>
         <Login/>
       </Route>
-      <Route exact path='/'>
-        {loggedIn ? <Redirect to='/main'/> : <Redirect to='/login'/>}
+      <Route exact path={`${process.env.PUBLIC_URL}/`}>
+        {loggedIn ? <Redirect to={`${process.env.PUBLIC_URL}/main`}/> : <Redirect to={`${process.env.PUBLIC_URL}/login`}/>}
       </Route>
     </div>
   );
