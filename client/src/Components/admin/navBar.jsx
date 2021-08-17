@@ -1,14 +1,13 @@
 import { AppBar, Box, Toolbar, Typography } from "@material-ui/core";
 import { Link } from 'react-router-dom'
-
+import LogoImg from '../../images/Logo.svg'
 
 export default function NavBar() {
     return (
         <AppBar position="static">
           <Toolbar style={{display: 'flex', justifyContent: 'space-between'}}>
-            <Link className='linkClean' to='/main'><Typography variant="h6" >
-              GreatWoods Cabinetry
-            </Typography> 
+            <Link className='linkClean' to='/main'>
+                <Box width='100px'><img src={LogoImg} /></Box> 
             </Link>
             <Box display='flex' justifyContent='space-around' width='75%' height='100%'>
                 <Box border='1px solid black' height='100%'>

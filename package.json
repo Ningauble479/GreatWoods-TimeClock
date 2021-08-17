@@ -6,6 +6,6 @@
   },
   "homepage": "http://greatwoodstc.com",
   "scripts": {
-    "dev": "concurrently \"cd Server && nodemon index.js\" \"cd client && npm start\""
+    "dev": "concurrently \"cd Server && nodemon app.js\" \"cd client && npm start\""
   }
 }

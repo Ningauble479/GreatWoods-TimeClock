@@ -15,7 +15,7 @@ export default function FileView (props) {
     let [ path, setPath ] = useState(`jobs/${props.job}`)
 
     let getFolders = async () => {
-        let {data, config} = await axiosScript('post', 'http://localhost:3001/api/files/getJobFolders', {job: props.job})
+        let {data, config} = await axiosScript('post', '/api/files/getJobFolders', {job: props.job})
         console.log(data)
         setFolders(data.folders)
         setFolderView(true)
@@ -24,7 +24,7 @@ export default function FileView (props) {
     let getFiles = async (folder) => {
         let newPath = path+`/${folder}`
         setPath(newPath)
-        let {data} = await axiosScript('post', 'http://localhost:3001/api/files/getFile', {path: newPath})
+        let {data} = await axiosScript('post', '/api/files/getFile', {path: newPath})
         console.log(data)
         if(data.type === 'dir'){
             setFolders(data.folders)
@@ -37,7 +37,7 @@ export default function FileView (props) {
     }
 
     let getSpecificFile = async (file) => {
-        let {data} = await axiosScript('post', 'http://localhost:3001/api/files/getFiles', {currentFolder, file})
+        let {data} = await axiosScript('post', '/api/files/getFiles', {currentFolder, file})
         console.log(data.data.data)
         setpdf(data.data.data)
         setFiles(null)

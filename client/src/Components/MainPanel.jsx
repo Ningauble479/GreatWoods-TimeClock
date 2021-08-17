@@ -3,7 +3,7 @@ import Timer from "./Timer";
 import { Box, Button, Typography } from '@material-ui/core'
 import FileView from './FileView'
 import axiosScript from "../scripts/axiosScripts";
-
+import { Link } from 'react-router-dom'
 
 export default function MainPanel() {
 
@@ -50,7 +50,7 @@ export default function MainPanel() {
     }
 
     const getTasks = async (job) => {
-        let {data} = await axiosScript('post', 'api/files/getJobFolders', {job: job})
+        let {data} = await axiosScript('post', '/api/files/getJobFolders', {job: job})
         setTasks(data.folders)
     }
 
@@ -66,6 +66,8 @@ export default function MainPanel() {
 
     return (
     <Box style={{overflowX:'hidden'}} width='100vw' height='100vh'>
+        <Box height='150px' mt={2} pl={2} borderBottom='1px solid black' display='flex'>
+            <Link to='/admin'><Typography>Admin Panel</Typography></Link> </Box>
         <Box p={5} borderBottom='1px solid black' display='flex' flexDirection='row' justifyContent='space-around' alignContent='space-between'>
         {!names ? <div>Loading...</div> : names.map((row)=>{return(
             <Box>
