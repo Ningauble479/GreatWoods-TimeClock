@@ -13,7 +13,7 @@ function App() {
   let [ loggedIn, setLoggedIn ] = useState(true)
   return (
     <div className="App">
-      <Route path={`${process.env.PUBLIC_URL}/main`}>
+      <Route path={`/main`}>
         <MainPanel/>
       </Route>
       <Route path={`${process.env.PUBLIC_URL}/admin`}>
@@ -22,7 +22,7 @@ function App() {
       <Route path={`${process.env.PUBLIC_URL}/login`}>
         <Login/>
       </Route>
-      <Route exact path={`${process.env.PUBLIC_URL}/`}>
+      <Route exact path={`/`}>
         {loggedIn ? <Redirect to={`${process.env.PUBLIC_URL}/main`}/> : <Redirect to={`${process.env.PUBLIC_URL}/login`}/>}
       </Route>
     </div>
