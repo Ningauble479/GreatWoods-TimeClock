@@ -35,7 +35,16 @@ mongoose.connect(dbRoute, {
     useFindAndModify: false
 });
 
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
+  app.use( '/', express.static(path.join(__dirname, "../client/build")));
+
+  app.get("*", function (req, res) {
+   res.sendFile(path.join(__dirname, "./client/build/index.html"));
+  });
 
 
     app.listen(port, function() {
@@ -43,11 +52,3 @@ mongoose.connect(dbRoute, {
     });
 
 
-import path from "path";
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "./client/build")));
-
-  app.get("*", function (req, res) {
-   res.sendFile(path.join(__dirname, "./client/build/index.html"));
-  });
-}
