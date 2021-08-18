@@ -3,11 +3,11 @@ import axios from 'axios'
 export default async function axiosScript (type, path, args) {
 
     if(type === 'get') {
-        let data = await axios.get(`http://localhost:50000${path}`)
+        let data = await axios.get(`greatwoodstc.com${path}`)
         return data
     }
     else if(type === 'post'){
-        let data = await axios.post(`http://localhost:50000${path}`, args)
+        let data = await axios.post(`greatwoodstc.com${path}`, args)
         return data
     }
     else {
