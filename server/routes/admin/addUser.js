@@ -5,9 +5,7 @@ export default async (req,res) => {
     let newUser = new users()
 
     newUser.userName = req.body.username
-    newUser.password = req.body.password
     newUser.jobTitle = req.body.jobtitle
-    newUser.admin = req.body.admin
     newUser.clockedIn = false
 
     newUser.save((err)=>{

@@ -10,7 +10,8 @@ const timeBlocksSchema = new Schema({
     hours: Number,
     minutes: Number,
     seconds: Number
-  }
+  },
+  date: String
 });
 
 

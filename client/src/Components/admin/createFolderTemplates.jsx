@@ -48,7 +48,7 @@ export default function CreateFolderTemplates () {
         <Box>
             <Table>
                 <TableHead>
-                    <TableRow>
+                    <TableRow style={{background: '#777777'}}>
                         <TableCell>
                             Folder Name
                         </TableCell>
@@ -115,8 +115,8 @@ export default function CreateFolderTemplates () {
                             </Button>
                         </TableCell>
                     </TableRow>
-                    <TableRow>
-                        <TableCell><TextField id="filled-basic" label="Template Name" variant="filled" onChange={(e)=>{setTemplateName(e.target.value)}} /></TableCell>
+                    <TableRow style={{background: '#777777', color: 'white'}}>
+                        <TableCell><TextField color="secondary" InputProps={{color: 'white'}} id="filled-basic" label="Template Name" variant="filled" onChange={(e)=>{setTemplateName(e.target.value)}} /></TableCell>
                         <TableCell></TableCell>
                         <TableCell><Button onClick={()=>{setTemplate()}}>Finish</Button></TableCell>
                     </TableRow>

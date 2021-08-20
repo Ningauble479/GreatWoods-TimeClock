@@ -5,20 +5,14 @@ import axios from '../../scripts/axiosScripts'
 export default function CreateAccount () {
 
     let [username, setUsername] = useState(null)
-    let [password, setPassword] = useState(null)
     let [jobtitle, setJobTitle] = useState('Floor')
-    let [admin, setAdmin] = useState(false)
     let [workers, setWorkers] = useState(null)
 
 
     
     let sendData = async () => {
-        let data = await axios('post', '/api/admin/addUser', {username, password, jobtitle, admin})
+        let data = await axios('post', '/api/admin/addUser', {username, jobtitle})
         console.log(data)
-    }
-
-    const handleChange = (e) => {
-        setAdmin(e.target.checked)
     }
     
     const setTitle = (e) => {
@@ -44,17 +38,11 @@ export default function CreateAccount () {
                     <Box height='75%'>
                         <form style={{height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-around'}}>
                             <TextField id="filled-basic" label="Username" variant="filled" onChange={(e)=>{setUsername(e.target.value)}} />
-                            <TextField id="filled-basic" label="Password" type='password' variant="filled" onChange={(e)=>{setPassword(e.target.value)}} />
                             <Typography>Job Title</Typography>
-                            <RadioGroup style={{display: 'flex', flexDirection: 'row'}} name="jobtitle" value={jobtitle} onChange={setTitle}>
+                            <RadioGroup style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}} name="jobtitle" value={jobtitle} onChange={setTitle}>
                                 <FormControlLabel value="Floor" control={<Radio/>} label='Floor'/>
                                 <FormControlLabel value="Office" control={<Radio/>} label='Office'/>
-                                <FormControlLabel value="Other" control={<Radio/>} label='Other'/>
                             </RadioGroup>
-                            <FormControlLabel 
-                                control={<Switch checked={admin} onChange={handleChange} name="admin" color="primary" />}
-                                label='Admin?'
-                                />
 
                             <Button variant='outlined' onClick={()=>{sendData()}}>Create Account</Button>
                         </form>

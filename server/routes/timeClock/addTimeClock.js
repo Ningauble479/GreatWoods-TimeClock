@@ -6,7 +6,8 @@ import {startOfWeek, endOfWeek, format} from 'date-fns'
 
 let createNewTimeBlock = async (id, job, dayID, task) => {
     console.log(task)
-    let data = await timeBlock.findOne({$and: [{user: id}, {job: job}, {task: task}]})
+    let todayD = format(new Date(), 'MM dd yyyy')
+    let data = await timeBlock.findOne({$and: [{user: id}, {job: job}, {task: task}, {date: todayD}]})
     if(!data){
     let newTimeStamp = new timeBlock()
     newTimeStamp.user = id
@@ -18,10 +19,13 @@ let createNewTimeBlock = async (id, job, dayID, task) => {
         minutes: 0,
         seconds: 0
     }
+    newTimeStamp.date = format(new Date(), 'MM dd yyyy')
     newTimeStamp.save((err, data)=>{
+        console.log('here')
         if(err) console.log(err)
         if(err) return {success: false, err: err}
         console.log(dayID)
+        console.log(data._id)
         timeSheetDays.findOneAndUpdate({_id: dayID}, {$push: {blocks: data._id}}).exec((err, data2)=>{
             if(err) return {success: false, err: err}
             console.log({updated: data2})
@@ -29,6 +33,7 @@ let createNewTimeBlock = async (id, job, dayID, task) => {
         })
     })
     } else {
+        console.log('whut')
         return {success: true, msg: 'Time Stamp Found!'}
     }
 }
@@ -39,6 +44,7 @@ let createNewDay = async (id, timeSheetID, job, task) => {
     newDay.user = id
     newDay.day = format(new Date(), 'eeee')
     newDay.blocks = []
+    newDay.date = format(new Date(), 'MM dd yyyy')
     newDay.save((err,data)=>{
         console.log(timeSheetID)
         if(err) return {success: false, err: err}
@@ -57,7 +63,7 @@ export default async (req,res) => {
     let data = await timeSheet.findOne({$and: [{user: req.body.id}, {week: week}]})
     if(data){
         let today = format(new Date(), 'eeee')
-        let day = await timeSheetDays.findOne({$and: [{user: req.body.id}, {day: today}]})
+        let day = await timeSheetDays.findOne({$and: [{user: req.body.id}, {day: today}, {date: format(new Date(), 'MM dd yyyy')}]})
         if(!day){
             let response = await createNewDay(req.body.id, data._id, req.body.job, req.body.task)
             return res.json(response)

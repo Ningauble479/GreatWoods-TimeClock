@@ -4,7 +4,8 @@ const { Schema } = mongoose;
 const timeSheetsSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'users' },
   week: String,
-  days: [{ type: Schema.Types.ObjectId, ref: 'timeSheetDays'}]
+  days: [{ type: Schema.Types.ObjectId, ref: 'timeSheetDays'}],
+  date: String
 });
 
 

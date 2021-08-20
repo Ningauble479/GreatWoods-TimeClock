@@ -5,9 +5,7 @@ const SALT_WORK_FACTOR = 10;
 
 const userSchema = new Schema({
   userName: String,
-  password: String,
   jobTitle: String,
-  admin: Boolean,
   clockedIn: Boolean
 });
 

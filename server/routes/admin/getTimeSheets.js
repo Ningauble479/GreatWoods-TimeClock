@@ -12,6 +12,7 @@ export default async (req,res) => {
     let weekEnd = format(endOfWeek(new Date(), {weekStartsOn: 1}), 'MM dd yyyy')
     let week = `${weekStart} - ${weekEnd}`
     console.log(week)
+    console.log(req.body.id)
     timeSheets.findOne({$and: [{user: req.body.id}, {week: week}]}).populate({
         path: 'days user',
         populate: {
