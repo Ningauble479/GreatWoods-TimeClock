@@ -13,7 +13,7 @@ export default async (req,res) => {
     let week = `${weekStart} - ${weekEnd}`
     console.log(week)
     console.log(req.body.id)
-    timeSheets.findOne({$and: [{user: req.body.id}, {week: week}]}).populate({
+    timeSheets.findOne(req.body.query).populate({
         path: 'days user',
         populate: {
             path: 'blocks'

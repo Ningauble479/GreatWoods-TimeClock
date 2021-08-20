@@ -2,7 +2,8 @@
   "dependencies": {
     "concurrently": "^6.2.0",
     "date-fns": "^2.23.0",
-    "nodemon": "^2.0.12"
+    "nodemon": "^2.0.12",
+    "react-calendar": "^3.4.0"
   },
   "homepage": "http://greatwoodstc.com",
   "scripts": {
