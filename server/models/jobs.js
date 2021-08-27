@@ -15,7 +15,8 @@ const jobsSchema = new Schema({
     billing: String,
     supervisor: String,
     superPhone: String,
-    designer: String
+    designer: String,
+    active: Boolean
 });
 
 

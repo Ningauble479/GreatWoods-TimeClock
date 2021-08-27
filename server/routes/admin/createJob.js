@@ -18,6 +18,7 @@ export default async (req,res) => {
     newJob.supervisor = req.body.supervisor
     newJob.superPhone = req.body.superPhone
     newJob.designer = req.body.designer
+    newJob.active = true
 
 
 

@@ -8,6 +8,7 @@ import CreateAccount from "./createAccounts";
 import CreateFolderTemplates from "./createFolderTemplates";
 import CreateJob from "./createJob";
 import CheckTimeSheets from "./checkTimeSheetsMain";
+import JobManager from "./jobManager";
 
 
 export default function AdminMain () {
@@ -25,6 +26,9 @@ export default function AdminMain () {
         </Route>
         <Route path='/admin/checkTimeSheet'>
             <CheckTimeSheets/>
+        </Route>
+        <Route path={`${process.env.PUBLIC_URL}/admin/jobManager`}>
+            <JobManager/>
         </Route>
         </Box>
     )

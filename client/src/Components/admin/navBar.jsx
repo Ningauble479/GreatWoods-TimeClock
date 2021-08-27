@@ -22,6 +22,9 @@ export default function NavBar() {
                 <Box>
                     <Link className='linkClean' to='/admin/checkTimeSheet'>Check Time Sheets</Link>
                 </Box>
+                <Box>
+                    <Link className='linkClean' to='/admin/jobManager'>Manage Jobs</Link>
+                </Box>
             </Box>
             <Link to='login' className='linkClean' color="inherit">Logout</Link>
           </Toolbar>

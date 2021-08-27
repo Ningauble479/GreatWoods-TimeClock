@@ -7,13 +7,7 @@ import {startOfWeek, endOfWeek, format} from 'date-fns'
 
 
 export default async (req,res) => {
-    
-    let weekStart = format(startOfWeek(new Date(), {weekStartsOn: 1}), 'MM dd yyyy')
-    let weekEnd = format(endOfWeek(new Date(), {weekStartsOn: 1}), 'MM dd yyyy')
-    let week = `${weekStart} - ${weekEnd}`
-    console.log(week)
-    console.log(req.body.id)
-    timeSheets.findOne(req.body.query).populate({
+    timeSheets.find(req.body.query).populate({
         path: 'days user',
         populate: {
             path: 'blocks'

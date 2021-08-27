@@ -71,7 +71,7 @@ export default function MainPanel() {
         <Box p={5} borderBottom='1px solid black' display='flex' flexDirection='row' justifyContent='space-around' alignContent='space-between'>
         {!names ? <div>Loading...</div> : names.map((row)=>{return(
             <Box>
-                <Button color={ name === row.userName ? 'success' : 'primary'} variant='contained' style={{width: '200px', height: '200px', fontSize: '30px'}} onClick={(e)=>{
+                <Button color={ name === row.userName ? 'success' : 'primary'} variant='contained' style={{minWidth: '200px', height: '200px', fontSize: '30px'}} onClick={(e)=>{
                     if(timer)return
                     setName(row.userName)
                     setID(row._id)}}>
@@ -81,9 +81,11 @@ export default function MainPanel() {
         )})}
         </Box>
         <Box p={5} borderBottom='1px solid black' display='flex' flexDirection='row' justifyContent='space-around' alignContent='space-between' flexWrap='wrap'>
-        {!jobs ? <div>Loading...</div> : jobs.map((row)=>{return(
+        {!jobs ? <div>Loading...</div> : jobs.map((row)=>{
+            if(!row.active) return null
+            return(
             <Box m={5}>
-                <Button color={ job === row.jobName ? 'success' : 'primary'} variant='contained' style={{width: '200px', height: '200px', fontSize: '50px'}} onClick={(e)=>{
+                <Button color={ job === row.jobName ? 'success' : 'primary'} variant='contained' style={{minWidth: '200px', height: '200px', fontSize: '50px'}} onClick={(e)=>{
                     if(timer)return
                     getTasks(row.jobName)
                     setJob(row.jobName)
@@ -96,7 +98,7 @@ export default function MainPanel() {
         <Box p={5} borderBottom='1px solid black' display='flex' flexDirection='row' justifyContent='space-around' alignContent='space-between' flexWrap='wrap'>
         {!tasks ? <div>Loading...</div> : tasks.map((row)=>{return(
             <Box m={5}>
-                <Button color={ task === row ? 'success' : 'primary'} variant='contained' style={{width: '200px', height: '200px', fontSize: '50px'}} onClick={(e)=>{
+                <Button color={ task === row ? 'success' : 'primary'} variant='contained' style={{minWwidth: '200px', height: '200px', fontSize: '50px'}} onClick={(e)=>{
                     if(timer) return
                     setTask(row)}}>
                 {row}
@@ -105,7 +107,7 @@ export default function MainPanel() {
         )})}
         </Box>
 
-        <Box mt={5}><Button  variant='contained' style={{width: '200px', height: '200px'}} onClick={(e)=>{startTimer()}}>Start Timer</Button></Box>
+        <Box mt={5}><Button  variant='contained' style={{minWidth: '200px', height: '200px'}} onClick={(e)=>{startTimer()}}>Start Timer</Button></Box>
         <Box color='red' mt={5}><Typography variant='h4'>{!warning ? null : warning}</Typography></Box>
         <Box display='flex' flexDirection='column' height='100%' justifyContent='space-between' borderTop='1px solid black'>
             {timer ? <Timer width='100%' job={job} id={id} name={name} task={task} endTimer={endTimer}/> : null}

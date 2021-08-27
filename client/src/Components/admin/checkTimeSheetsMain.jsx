@@ -5,37 +5,52 @@ import {startOfWeek, endOfWeek, format} from 'date-fns'
 import Calendar from 'react-calendar';
 
 let CheckTimeSheets = () => {
+
     let [date, setDate] = useState(new Date());
-    let [users, setUsers] = useState(null)
-    let [days, setDays] = useState(null)
+    let [users, setUsers] = useState([{userName: 'All'}])
     let [name, setName] = useState(null)
     let [id, setID] = useState(null)
     let [dateFNS, setDateFNS] = useState(null)
     let [weekFNS, setWeekFNS] = useState(null)
+    let [job, setJob] = useState(null)
+    let [jobs, setJobs] = useState(null)
+    let [blocks, setBlocks] = useState(null)
+    let [sheets, setSheets] = useState(null)
+    let [searchType, setSearchType] = useState(null)
+
+
     let getUsers = async () => {
         let {data} = await axiosScript('post', '/api/admin/getAccounts')
-        console.log(data)
-        setUsers(data.data)
+        console.log(data.data)
+        let array = users
+        let newArray = array.concat(data.data)
+        console.log(array)
+        setUsers([...newArray])
     }
 
     let searchWeek = async (id) => {
-        let {data} = await axiosScript('post', '/api/admin/getTimeSheets', {query: {$and: [{user: id}, {week: weekFNS}]}})
-        console.log(id)
-        if(!data || !data.data || !data.data.days){return setDays(null)}
-        setDays(data.data.days)
-        setName(data.data.user?.userName)
+        let search = {$and: [{user: id}, {week: weekFNS}]}
+        if(!id) search = {week: weekFNS}
+        let {data} = await axiosScript('post', '/api/admin/getTimeSheets', {query: search})
+        console.log(data.data)
+        setBlocks(null)
+        setSheets(data.data)
+        setSearchType('Searching By Week')
     }
 
     let searchDay = async () => {
-        console.log(dateFNS)
+        let {data} = await axiosScript('post', '/api/admin/getTimeSheetDay', {query: {$and: [{user: id}, {date: dateFNS}]}})
+        setBlocks(data.data)
+        setSearchType('Searching By Day')
     }
 
     let searchJob = async () => {
-        console.log('job')
-    }
+        console.log(job)
+        let {data} = await axiosScript('post', '/api/admin/getTimeSheetJob', {query: {job: job}})
+        console.log(data.data)
+        setBlocks(data.data)
+        setSearchType('Searching By Job')
 
-    let getTimeSheetsJob = async (e) => {
-        let {data} = await axiosScript('post', '/api/admin/getTimeSheets', {})
     }
 
     const handleChange = async (event) => {
@@ -43,6 +58,10 @@ let CheckTimeSheets = () => {
         setID(event.currentTarget.id);
         searchWeek(event.currentTarget.id)
       };
+
+    let handleChange2 = async (e) => {
+        setJob(e.target.value)
+    }
 
     let handleCalendar = async (e) => {
         console.log(e)
@@ -55,6 +74,12 @@ let CheckTimeSheets = () => {
         setWeekFNS(week)
     }
 
+    let getJobs = async () => {
+        let {data} = await axiosScript('post', '/api/admin/getJobs')
+        console.log(data)
+        setJobs(data.data)
+    }
+
     useEffect(()=>{
         let weekStart = format(startOfWeek(new Date(), {weekStartsOn: 1}), 'MM dd yyyy')
         let weekEnd = format(endOfWeek(new Date(), {weekStartsOn: 1}), 'MM dd yyyy')
@@ -63,6 +88,7 @@ let CheckTimeSheets = () => {
         setWeekFNS(week)
         setDateFNS(day)
         getUsers()
+        getJobs()
     },[])
 
     return (
@@ -85,6 +111,22 @@ let CheckTimeSheets = () => {
             
                 </Select>
             </FormControl>
+            <FormControl style={{minWidth: 120}}>
+                <InputLabel id="demo-simple-select-label">Job</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={job}
+                  onChange={handleChange2}
+                >
+                    {!jobs ? null : jobs.map((row)=>{
+                return (
+                    <MenuItem value={row.jobName}>{row.jobName}</MenuItem>
+                )
+            })}
+            
+                </Select>
+            </FormControl>
             <Typography>Day Shown: {dateFNS}</Typography>
             <Typography>Week Shown: {weekFNS}</Typography>
             </Box>
@@ -100,6 +142,7 @@ let CheckTimeSheets = () => {
             <Button onClick={()=>{searchWeek(id)}}>Search By Week</Button>
             <Button onClick={()=>{searchJob(id)}}>Search By Job</Button>
             </Box>
+            <Box>{!searchType ? 'Not searching anything' : searchType}</Box>
             <Table>
                 <TableHead>
                     <TableRow>
@@ -111,11 +154,25 @@ let CheckTimeSheets = () => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {!days ? <div>Loading...</div> : days.map((row)=>{
+                    
+                    {
+                    blocks ? blocks.map((row)=>{
+                        return (
+                        <TableRow>
+                            <TableCell>{row.user.userName ? row.user.userName : !name ? 'Error No name found' : name}</TableCell>
+                            <TableCell>{row.job}</TableCell>
+                            <TableCell>{row.task}</TableCell>
+                            <TableCell>{`${row.time.hours} : ${row.time.minutes} : ${row.time.seconds}`}</TableCell>
+                            <TableCell>{row.date}</TableCell>
+                        </TableRow>
+                        )
+                    }) : !sheets ? <div>Loading...</div> : sheets.map((sheet)=>{
+                        let name = sheet.user.userName
+                    return sheet.days.map((row)=>{
                         return row.blocks.map((row2)=>{
                             return (
                                 <TableRow>
-                                    <TableCell>{!name ? 'Error No name found' : name}</TableCell>
+                                    <TableCell>{row.user.userName ? row.user.userName : !name ? 'Error No name found' : name}</TableCell>
                                     <TableCell>{row2.job}</TableCell>
                                     <TableCell>{row2.task}</TableCell>
                                     <TableCell>{`${row2.time.hours} : ${row2.time.minutes} : ${row2.time.seconds}`}</TableCell>
@@ -123,7 +180,7 @@ let CheckTimeSheets = () => {
                                 </TableRow>
                             )
                         })
-                    })}
+                    })})}
                 </TableBody>
             </Table>
         </Box>
