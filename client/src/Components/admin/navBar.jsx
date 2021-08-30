@@ -1,8 +1,13 @@
-import { AppBar, Box, Toolbar, Typography } from "@material-ui/core";
+import { AppBar, Box, Toolbar, Button } from "@material-ui/core";
 import { Link } from 'react-router-dom'
 import LogoImg from '../../images/Logo.svg'
 
 export default function NavBar() {
+    
+    let logOut = async () => {
+        localStorage.setItem('passcode', '0')
+        window.location.reload()
+    }
     return (
         <AppBar position="static">
           <Toolbar style={{display: 'flex', justifyContent: 'space-between'}}>
@@ -26,7 +31,7 @@ export default function NavBar() {
                     <Link className='linkClean' to='/admin/jobManager'>Manage Jobs</Link>
                 </Box>
             </Box>
-            <Link to='login' className='linkClean' color="inherit">Logout</Link>
+            <Button color="inherit" onClick={()=>{logOut()}}>Logout</Button>
           </Toolbar>
         </AppBar>
     )

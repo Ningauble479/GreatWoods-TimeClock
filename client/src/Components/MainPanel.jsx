@@ -5,7 +5,7 @@ import FileView from './FileView'
 import axiosScript from "../scripts/axiosScripts";
 import { Link } from 'react-router-dom'
 
-export default function MainPanel() {
+export default function MainPanel(props) {
 
     let [job, setJob] = useState(null)
     let [task, setTask] = useState(null)
@@ -58,6 +58,12 @@ export default function MainPanel() {
         setTimer(false)
     }
 
+    let logout = async () => {
+        localStorage.setItem('passcode', '0')
+        localStorage.setItem('level', '0')
+        window.location.reload()
+    }
+
     useEffect(()=>{
         getUsers()
         
@@ -66,8 +72,11 @@ export default function MainPanel() {
 
     return (
     <Box style={{overflowX:'hidden'}} width='100vw' height='100vh'>
-        <Box height='150px' mt={2} pl={2} borderBottom='1px solid black' display='flex'>
-            <Link to='/admin'><Typography>Admin Panel</Typography></Link> </Box>
+        <Box mt={2} pl={2} borderBottom='1px solid black' display='flex' justifyContent='space-around' pb={2}>
+            {props.level === 'admin' ? <Link to='/admin' className='linkClean'><Typography>Admin Panel</Typography></Link> : null} 
+            <Typography className='linkClean' onClick={()=>{logout()}}>Logout</Typography>
+        </Box>
+            
         <Box p={5} borderBottom='1px solid black' display='flex' flexDirection='row' justifyContent='space-around' alignContent='space-between'>
         {!names ? <div>Loading...</div> : names.map((row)=>{return(
             <Box>
