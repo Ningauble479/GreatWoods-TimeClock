@@ -1,6 +1,6 @@
 import { AppBar, Box, Toolbar, Button } from "@material-ui/core";
 import { Link } from 'react-router-dom'
-import LogoImg from '../../images/Logo.svg'
+import LogoImg from '../../images/LogoLight.png'
 
 export default function NavBar() {
     
@@ -12,7 +12,7 @@ export default function NavBar() {
         <AppBar position="static">
           <Toolbar style={{display: 'flex', justifyContent: 'space-between'}}>
             <Link className='linkClean' to='/main'>
-                <Box width='100px'><img src={LogoImg} /></Box> 
+                <Box width='100px'><img src={LogoImg} style={{maxWidth: '150px'}} /></Box> 
             </Link>
             <Box display='flex' justifyContent='space-around' width='75%' height='100%'>
                 <Box border='1px solid black' height='100%'>
