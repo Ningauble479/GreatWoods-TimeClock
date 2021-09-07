@@ -30,6 +30,9 @@ export default function NavBar() {
                 <Box>
                     <Link className='linkClean' to='/admin/jobManager'>Manage Jobs</Link>
                 </Box>
+                <Box>
+                    <Link className='linkClean' to='/admin/addPunch'>Add/Edit Punch</Link>
+                </Box>
             </Box>
             <Button color="inherit" onClick={()=>{logOut()}}>Logout</Button>
           </Toolbar>

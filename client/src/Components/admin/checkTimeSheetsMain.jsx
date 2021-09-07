@@ -1,8 +1,9 @@
-import { Box, Table, TableBody, TableCell, TableHead, TableRow, Button, FormControl, InputLabel, Select, MenuItem, Typography } from '@material-ui/core'
+import { Box, Table, TableBody, TableCell, TableHead, TableRow, Button, FormControl, InputLabel, Select, MenuItem, Typography, TextField } from '@material-ui/core'
 import { useEffect, useState } from 'react'
 import axiosScript from '../../scripts/axiosScripts'
 import {startOfWeek, endOfWeek, format} from 'date-fns'
 import Calendar from 'react-calendar';
+import AddPunch from './addPunch';
 
 let CheckTimeSheets = () => {
 
@@ -17,6 +18,11 @@ let CheckTimeSheets = () => {
     let [blocks, setBlocks] = useState(null)
     let [sheets, setSheets] = useState(null)
     let [searchType, setSearchType] = useState(null)
+    let [updateTime, setUpdateTime] = useState({
+        hours: 0,
+        seconds: 0,
+        minutes: 0
+    })
 
 
     let getUsers = async () => {
@@ -78,6 +84,11 @@ let CheckTimeSheets = () => {
         let {data} = await axiosScript('post', '/api/admin/getJobs')
         console.log(data)
         setJobs(data.data)
+    }
+
+    let editPunch = (block) => {
+        axiosScript('post', '/api/timeClock/updateBlock', {blockID: block._id, time: updateTime})
+        window.location.reload()
     }
 
     useEffect(()=>{
@@ -149,8 +160,9 @@ let CheckTimeSheets = () => {
                         <TableCell>Name</TableCell>
                         <TableCell>Job</TableCell>
                         <TableCell>Task</TableCell>
-                        <TableCell>Time</TableCell>
+                        <TableCell>Time H/M/S</TableCell>
                         <TableCell>Date</TableCell>
+                        <TableCell>Edit</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -162,8 +174,9 @@ let CheckTimeSheets = () => {
                             <TableCell>{row.user.userName ? row.user.userName : !name ? 'Error No name found' : name}</TableCell>
                             <TableCell>{row.job}</TableCell>
                             <TableCell>{row.task}</TableCell>
-                            <TableCell>{`${row.time.hours} : ${row.time.minutes} : ${row.time.seconds}`}</TableCell>
+                            <TableCell><TextField label='Hours' defaultValue={row.time.hours} onChange={(e)=>setUpdateTime({...updateTime, hours: e.target.value})}/> <TextField label='Minutes' defaultValue={row.time.minutes} onChange={(e)=>setUpdateTime({...updateTime, minutes: e.target.value})}/> <TextField label='Seconds' defaultValue={row.time.seconds} onChange={(e)=>setUpdateTime({...updateTime, seconds: e.target.value})}/></TableCell>
                             <TableCell>{row.date}</TableCell>
+                            <TableCell><Button onClick={()=>editPunch(row)}>Save</Button></TableCell>
                         </TableRow>
                         )
                     }) : !sheets ? <div>Loading...</div> : sheets.map((sheet)=>{
@@ -175,8 +188,9 @@ let CheckTimeSheets = () => {
                                     <TableCell>{row.user.userName ? row.user.userName : !name ? 'Error No name found' : name}</TableCell>
                                     <TableCell>{row2.job}</TableCell>
                                     <TableCell>{row2.task}</TableCell>
-                                    <TableCell>{`${row2.time.hours} : ${row2.time.minutes} : ${row2.time.seconds}`}</TableCell>
+                                    <TableCell><TextField label='Hours' defaultValue={row2.time.hours} onChange={(e)=>setUpdateTime({...updateTime, hours: e.target.value})}/> <TextField label='Minutes' defaultValue={row2.time.minutes} onChange={(e)=>setUpdateTime({...updateTime, minutes: e.target.value})}/> <TextField label='Seconds' defaultValue={row2.time.seconds} onChange={(e)=>setUpdateTime({...updateTime, seconds: e.target.value})}/></TableCell>
                                     <TableCell>{row2.date}</TableCell>
+                                    <TableCell><Button onClick={(e)=>editPunch(row2)}>Save</Button></TableCell>
                                 </TableRow>
                             )
                         })

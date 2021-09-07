@@ -6,7 +6,9 @@ export default async (req,res) => {
 
     try {
         let todayD = format(new Date(), 'MM dd yyyy')
-        let data = await timeBlocks.findOneAndUpdate({$and: [{user: req.body.id}, {job: req.body.job, task: req.body.task, date: todayD}]}, {times: req.body.times, $inc: {'time.hours': req.body.time.hours, 'time.minutes': req.body.time.minutes, 'time.seconds': req.body.time.seconds}})
+        let data = null
+        if(!req.body.blockID) data = await timeBlocks.findOneAndUpdate({$and: [{user: req.body.id}, {job: req.body.job, task: req.body.task, date: todayD}]}, {times: req.body.times, $inc: {'time.hours': req.body.time.hours, 'time.minutes': req.body.time.minutes, 'time.seconds': req.body.time.seconds}})
+        else data = await timeBlocks.findOneAndUpdate({_id: req.body.blockID}, {times: '', $set: {'time.hours': req.body.time.hours, 'time.minutes': req.body.time.minutes, 'time.seconds': req.body.time.seconds}})
         return res.json({success: true, data: data})
 
     } catch (err) {

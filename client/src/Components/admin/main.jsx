@@ -9,6 +9,7 @@ import CreateFolderTemplates from "./createFolderTemplates";
 import CreateJob from "./createJob";
 import CheckTimeSheets from "./checkTimeSheetsMain";
 import JobManager from "./jobManager";
+import AddPunch from "./addPunch";
 
 
 export default function AdminMain () {
@@ -29,6 +30,9 @@ export default function AdminMain () {
         </Route>
         <Route path={`${process.env.PUBLIC_URL}/admin/jobManager`}>
             <JobManager/>
+        </Route>
+        <Route path={`${process.env.PUBLIC_URL}/admin/addPunch`}>
+            <AddPunch/>
         </Route>
         </Box>
     )
