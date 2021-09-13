@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@material-ui/core'
+import { Box, Button, Typography, Table, TableRow, TableHead, TableBody, TableCell } from '@material-ui/core'
 import { useState } from 'react';
 import { useStopwatch } from 'react-timer-hook';
 import { differenceInMinutes, format, formatDistanceToNowStrict } from 'date-fns'
@@ -40,10 +40,14 @@ export default function Timer (props) {
     }
 
       let handleStart = () => {
+        props.startTimer()
+        
         let date = new Date()
+        if(!props.task) return alert('Please Select A Task')
         console.log(date)
         setStartTime(date)
         start()
+        reset()
       }
 
       
@@ -51,6 +55,8 @@ export default function Timer (props) {
       let handleStop = () => {
         let date = format(new Date(),  "h ':' m ':' s bbb")
         setEndTime(date)
+        
+        reset()
         pause()
         setFinished(true)
         updateTimeClock(startTime, date)
@@ -60,8 +66,29 @@ export default function Timer (props) {
 
 
     return (
-        <Box pt={5} width={props.width} textAlign='center'>
-            <Typography variant='h3'>{props.name}/{props.job}</Typography>
+        <>
+          <Button style={{borderRadius: '1000px', height:'300px', width:'300px', border:'15px solid gray', backgroundColor: isRunning ? 'red' : 'green', color: 'white'}} onClick={()=>{isRunning ? handleStop() : handleStart()}}><Typography variant='h3'>{isRunning ? 'Stop' : 'Start'}</Typography></Button>
+          <Table style={{maxWidth:'50%'}}>
+              <TableHead>
+                  <TableRow>
+                      <TableCell align='center'><Typography variant='h4'>Hours</Typography></TableCell>
+                      <TableCell align='center'><Typography variant='h4'>Mins</Typography></TableCell>
+                      <TableCell align='center'><Typography variant='h4'>Secs</Typography></TableCell>
+                  </TableRow>
+              </TableHead>
+              <TableBody>
+              <TableRow>
+                      <TableCell align='center'><Typography variant='h4'>{hours}</Typography></TableCell>
+                      <TableCell align='center'><Typography variant='h4'>{minutes}</Typography></TableCell>
+                      <TableCell align='center'><Typography variant='h4'>{seconds}</Typography></TableCell>
+                  </TableRow>
+              </TableBody>
+          </Table>
+        </>
+    )
+}
+
+{/* <Typography variant='h3'>{props.name}/{props.job}</Typography>
             <Box>Days/Hours/Minutes/Seconds</Box>
             <Box fontSize='100px'>
               {days}:{hours}:{minutes}:{seconds}
@@ -70,7 +97,4 @@ export default function Timer (props) {
             {isRunning ? null : finished ? null : <Button onClick={()=>{handleStart()}}>Start</Button>}
             {!isRunning ? null : <Button variant='contained' onClick={()=>{handleStop()}} style={{width:'300px', height:'300px'}}>Finish</Button>}
             <Box>{finishedTime ? finishedTime : null}</Box>
-            <Box>{howLong ? howLong : null}</Box>
-        </Box>
-    )
-}
+            <Box>{howLong ? howLong : null}</Box> */}

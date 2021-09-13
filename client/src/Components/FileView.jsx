@@ -4,7 +4,7 @@ import axiosScript from '../scripts/axiosScripts'
 import FolderIcon from '@material-ui/icons/Folder';
 import ShowPDF from './showpdf';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
-
+import FilesBG from '../images/FilesBG.jpg'
 export default function FileView (props) {
 
     let [ folders, setFolders ] = useState(null)
@@ -57,26 +57,23 @@ export default function FileView (props) {
     },[])
 
     return (
-        <Box pt={5} width='100%' mt={5} paddingBottom='500px' borderTop='1px solid black'>
-            <Button onClick={()=>{backToTop()}}>Back</Button>
-            <Typography variant='h2'>
-                Files
-            </Typography>
+        <Box pt={5} width='100%' paddingBottom='100px' style={{ backgroundImage: `url(${FilesBG})`, backgroundSize: 'cover' }} color='white'>
+            <Button variant='contained' color='#555555' onClick={()=>{backToTop()}}>Back</Button>
             <Typography>
                 {path}
             </Typography>
-            <Box width='100%' display='flex' justifyContent='space-around' flexWrap='wrap'>
+            <Box color='white' width='100%' display='flex' justifyContent='space-around' flexWrap='wrap'>
                 {!folderView ? null : folders.map((row)=>{
                     return (
                     <Box className='addHover' m={5} fontSize='150px' width='200px' height='200px' onClick={()=>{getFiles(row)}}>
-                        {row.includes('pdf') ? <PictureAsPdfIcon fontSize='inherit'/> : <FolderIcon fontSize='inherit'/>}
+                        {row.includes('pdf') ? <PictureAsPdfIcon fontSize='inherit'/> : <FolderIcon fontSize='inherit' style={{color: 'lightgoldenrodyellow'}}/>}
                         <Typography variant='h4'>{row}</Typography>
                     </Box>
                     )
                 })}
                 {!files ? null : files.map((row)=>{
                     return(
-                        <Box className='addHover' m={5} fontSize='150px' width='200px' height='200px' onClick={()=>{getSpecificFile(row)}}><FolderIcon fontSize='inherit'/><Typography variant='h4'>{row}</Typography></Box>
+                        <Box className='addHover' color='yellow' m={5} fontSize='150px' width='200px' height='200px' onClick={()=>{getSpecificFile(row)}}><FolderIcon fontSize='inherit' color='inherit' style={{color:'yellow'}}/><Typography variant='h4'>{row}</Typography></Box>
                     )
                 })}
                 {!pdf ? null : <ShowPDF pdf={pdf}/>}
