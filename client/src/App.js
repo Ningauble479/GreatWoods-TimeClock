@@ -49,7 +49,7 @@ function App() {
         {level === 'admin' || 'loading' ? <AdminMain/> : <Redirect to='/main'/>}
       </Route>
       <Route path={`${process.env.PUBLIC_URL}/login`}>
-        <Login/>
+        {!loggedIn ? <Login/> : <Redirect to='/main'/>}
       </Route>
       <Route path={'/documentation'}>
         <DocumentationRoutes/>
