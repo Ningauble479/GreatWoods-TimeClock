@@ -186,6 +186,7 @@ export default function MainPanel(props) {
                 {props.level === 'admin' ? <Link to='/admin' className='linkClean'><Typography>Admin Panel</Typography></Link> : null}
                 <img src={bigLogo} style={{ maxWidth: '25vw' }} />
                 <Typography className='linkClean' onClick={() => { logout() }}>Logout</Typography>
+                <Link className='linkClean' to='/documentation/main'>Docs?</Link>
             </Box>
 
 
