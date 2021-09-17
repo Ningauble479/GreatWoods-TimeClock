@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Timer from "./Timer";
-import { Box, Button, Collapse, Typography } from '@material-ui/core'
+import { Box, Button, Collapse, Typography, Tooltip, IconButton } from '@material-ui/core'
 import FileView from './FileView'
 import axiosScript from "../scripts/axiosScripts";
 import { Link } from 'react-router-dom'
@@ -13,7 +13,9 @@ import AnalogueClock from 'react-analogue-clock';
 import ScrollContainer from 'react-indiana-drag-scroll'
 import JobsBG from '../images/JobsBG.jpg'
 import FilesBG from '../images/FilesBG.jpg'
-
+import DescriptionIcon from '@material-ui/icons/Description';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 
 export default function MainPanel(props) {
 
@@ -140,32 +142,33 @@ export default function MainPanel(props) {
     let getClock = async (id) => {
         setClockInOpen(true)
         let today = format(new Date(), 'MM dd yyyy')
-        let {data} = await axiosScript('post', '/api/timeClock/getClockIn', {search: {$and : [{user: id}, {day: today}]}})
+        let { data } = await axiosScript('post', '/api/timeClock/getClockIn', { search: { $and: [{ user: id }, { day: today }] } })
         console.log(data.data)
-        if(!data.success) {
+        if (!data.success) {
             setClockInTime(null)
             setClockOutTime(null)
             setLunchInTime(null)
             setLunchOutTime(null)
             return
         }
-        if(data.data.clockIn) {
-        let parseTime = parseISO(data.data.clockIn)
-        let newTime = format(parseTime, 'h:mm b d LLL, yyyy')
-        console.log(newTime)
-        setClockInTime(newTime)
-        setClocked(true)}
-        if(data.data.lunchIn){
+        if (data.data.clockIn) {
+            let parseTime = parseISO(data.data.clockIn)
+            let newTime = format(parseTime, 'h:mm b d LLL, yyyy')
+            console.log(newTime)
+            setClockInTime(newTime)
+            setClocked(true)
+        }
+        if (data.data.lunchIn) {
             let parseTime = parseISO(data.data.lunchIn)
             let newTime = format(parseTime, 'h:mm b d LLL, yyyy')
             setLunchInTime(newTime)
         }
-        if(data.data.lunchOut) {
+        if (data.data.lunchOut) {
             let parseTime = parseISO(data.data.lunchOut)
             let newTime = format(parseTime, 'h:mm b d LLL, yyyy')
             setLunchOutTime(newTime)
         }
-        if(data.data.clockOut) {
+        if (data.data.clockOut) {
             let parseTime = parseISO(data.data.clockOut)
             let newTime = format(parseTime, 'h:mm b d LLL, yyyy')
             setClockOutTime(newTime)
@@ -182,11 +185,25 @@ export default function MainPanel(props) {
     return (
         <Box style={{ overflowX: 'hidden' }} width='100vw' height='100vh'>
             {/* NavBar */}
-            <Box mt={2} pl={2} maxHeight='228px' borderBottom='1px solid black' display='flex' justifyContent='space-around' pb={2}>
-                {props.level === 'admin' ? <Link to='/admin' className='linkClean'><Typography>Admin Panel</Typography></Link> : null}
-                <img src={bigLogo} style={{ maxWidth: '25vw' }} />
-                <Typography className='linkClean' onClick={() => { logout() }}>Logout</Typography>
-                <Link className='linkClean' to='/documentation/main'>Docs?</Link>
+            <Box mt={2} pl={2} maxHeight='228px' borderBottom='1px solid black' display='flex' justifyContent='flex-end' pb={2}>
+                <Box style={{justifyContent: 'center', display: 'flex', flex: '1', paddingLeft: '320px'}}>
+                    <img src={bigLogo} style={{ maxWidth: '25vw' }} />
+                </Box>
+                <Box style={{ height: '50px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '300px', paddingRight: '50px'}}>
+                    <Tooltip title='Documentation'>
+                        <Link className='linkClean' to='/documentation/main'>
+                            <DescriptionIcon style={{fontSize: '50px'}}/>
+                        </Link>
+                    </Tooltip>
+                    {props.level === 'admin' ? <Link to='/admin' className='linkClean'>
+                    <Tooltip title='Admin Panel'>
+                        <SupervisorAccountIcon style={{fontSize: '50px'}}/>
+                    </Tooltip>
+                </Link> : null}
+                <Tooltip title='Log Out'>
+                        <ExitToAppIcon className='linkClean' style={{fontSize: '50px'}} onClick={()=>{logout()}}/>
+                    </Tooltip>
+                </Box>
             </Box>
 
 
@@ -196,137 +213,141 @@ export default function MainPanel(props) {
 
                 {!names ? <div>Loading...</div> : <Box display='flex' width='100vw'>
                     <ScrollContainer className="scroll-container">
-                    <Box maxWidth='100%' display='flex'>
-                    {names.map((row) => {
-                        return (
+                        <Box maxWidth='100%' display='flex'>
+                            {names.map((row) => {
+                                return (
 
-                            <Box height='100%'>
-                                <Button variant='contained' style={{ marginRight: '50px', marginLeft: '50px', minWidth: '400px', height: '300px', fontSize: '30px', backgroundColor:name === row.userName ? 'green' : '#A3BCB6' }} onClick={(e) => {
-                                    if (timer) return alert('Please end your job timer')
-                                    setName(row.userName)
-                                    setID(row._id)
-                                    getClock(row._id)
-                                }}>
-                                    {row.userName}
-                                </Button>
-                            </Box>
-                        )
-                    })}
-                    </Box>
+                                    <Box height='100%'>
+                                        <Button variant='contained' style={{ marginRight: '50px', marginLeft: '50px', minWidth: '400px', height: '300px', fontSize: '30px', backgroundColor: name === row.userName ? 'green' : '#A3BCB6' }} onClick={(e) => {
+                                            if (timer) return alert('Please end your job timer')
+                                            setName(row.userName)
+                                            setID(row._id)
+                                            getClock(row._id)
+                                        }}>
+                                            {row.userName}
+                                        </Button>
+                                    </Box>
+                                )
+                            })}
+                        </Box>
                     </ScrollContainer>
-                    
+
                 </Box>}
             </Box>
 
             {/* Clock In/Out Section */}
             <Collapse in={clockInOpen} collapsedSize='100px'>
-            <Box>
-                <Box width='100vw' color='white' style={{backgroundColor: '#555555', paddingTop: '20px', paddingBottom: '20px'}} onClick={()=>{clockInOpen ? setClockInOpen(false) : setClockInOpen(true)}}> <Typography variant='h3'>Employee Time Clock</Typography></Box>
-                <Box p={5} borderBottom='1px solid black' display='flex' flexDirection='row' justifyContent='space-around' alignContent='space-between' flexWrap='nowrap'>
-                    <Box width='35%' display='flex' flexDirection='column' alignItems='center' justifyContent='center'>
+                <Box>
+                    <Box width='100vw' color='white' style={{ backgroundColor: '#555555', paddingTop: '20px', paddingBottom: '20px' }} onClick={() => { clockInOpen ? setClockInOpen(false) : setClockInOpen(true) }}> <Typography variant='h3'>Employee Time Clock</Typography></Box>
+                    <Box p={5} borderBottom='1px solid black' display='flex' flexDirection='row' justifyContent='space-around' alignContent='space-between' flexWrap='nowrap'>
+                        <Box width='35%' display='flex' flexDirection='column' alignItems='center' justifyContent='center'>
 
-                        <AnalogueClock {...clockOptions} />
-                        <Box>
-                            <Box textAlign='right'>AM</Box>
+                            <AnalogueClock {...clockOptions} />
                             <Box>
-                                <Typography variant='h1'>{timeShow}</Typography>
-                            </Box>
+                                <Box textAlign='right'>AM</Box>
+                                <Box>
+                                    <Typography variant='h1'>{timeShow}</Typography>
+                                </Box>
 
+                            </Box>
                         </Box>
-                    </Box>
-                    <Box width='65%' display='flex'>
-                        <Box width='100%' display='flex' justifyContent='space-around' flexDirection='column' minHeight='580px' height='100%'>
-                            <Box display='flex' justifyContent='space-around' alignItems='center'>
-                            <Button variant='contained' style={{width: '356px', height: '110px', backgroundColor: clockInTime ? 'green' : '#C4C4C4'}} onClick={(e)=>{
-                    if(timer)return alert('Please end your job timer')
-                    if(!id)return alert('please select a name')
-                    if(clockInTime) return alert('You Are Already Clocked In For The Day!')
-                    clockIn()}}><Typography variant='h4'>Clock In</Typography></Button>
-                            <Box style={{backgroundColor: 'gray', height: '50px', width: '450px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}><Typography variant='h4'>{clockInTime}</Typography></Box>
-                            </Box>
-                            <Box display='flex' justifyContent='space-around' alignItems='center'>
-                            <Button variant='contained' style={{width: '356px', height: '110px', backgroundColor: lunchInTime ? 'green' : '#C4C4C4'}} onClick={(e)=>{
-                if(timer)return alert('Please end your job timer')
-                if(!id)return alert('please select a name')
-                if(lunchInTime) return alert('You Already Clocked Your Lunch!')
-                lunchStart()}}><Typography variant='h4'>Start Lunch</Typography></Button>
-                            <Box style={{backgroundColor: 'gray', height: '50px', width: '450px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}><Typography variant='h4'>{lunchInTime}</Typography></Box>
-                            </Box>
-                            <Box display='flex' justifyContent='space-around' alignItems='center'>
-                            <Button variant='contained' style={{width: '356px', height: '110px', backgroundColor: lunchOutTime ? 'green' : '#C4C4C4'}} onClick={(e)=>{
-                    if(timer)return alert('Please end your job timer')
-                    if(!id)return alert('please select a name')
-                    if(lunchOutTime) return alert('You Already Clocked Your Lunch')
-                    lunchEnd()}}><Typography variant='h4'>End Lunch</Typography></Button>
-                            <Box style={{backgroundColor: 'gray', height: '50px', width: '450px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}><Typography variant='h4'>{lunchOutTime}</Typography></Box>
-                            </Box>
-                            <Box display='flex' justifyContent='space-around' alignItems='center'>
-                            <Button variant='contained' style={{width: '356px', height: '110px', backgroundColor: clockOutTime ? 'green' : '#C4C4C4'}} onClick={(e)=>{
-                    if(timer)return alert('Please end your job timer')
-                    if(!id)return alert('please select a name')
-                    if(clockOutTime) return alert('You Already Clocked Out!')
-                    clockOut()}}><Typography variant='h4'>Clock Out</Typography></Button>
-                            <Box style={{backgroundColor: 'gray', height: '50px', width: '450px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}><Typography variant='h4'>{clockOutTime}</Typography></Box>
+                        <Box width='65%' display='flex'>
+                            <Box width='100%' display='flex' justifyContent='space-around' flexDirection='column' minHeight='580px' height='100%'>
+                                <Box display='flex' justifyContent='space-around' alignItems='center'>
+                                    <Button variant='contained' style={{ width: '356px', height: '110px', backgroundColor: clockInTime ? 'green' : '#C4C4C4' }} onClick={(e) => {
+                                        if (timer) return alert('Please end your job timer')
+                                        if (!id) return alert('please select a name')
+                                        if (clockInTime) return alert('You Are Already Clocked In For The Day!')
+                                        clockIn()
+                                    }}><Typography variant='h4'>Clock In</Typography></Button>
+                                    <Box style={{ backgroundColor: 'gray', height: '50px', width: '450px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Typography variant='h4'>{clockInTime}</Typography></Box>
+                                </Box>
+                                <Box display='flex' justifyContent='space-around' alignItems='center'>
+                                    <Button variant='contained' style={{ width: '356px', height: '110px', backgroundColor: lunchInTime ? 'green' : '#C4C4C4' }} onClick={(e) => {
+                                        if (timer) return alert('Please end your job timer')
+                                        if (!id) return alert('please select a name')
+                                        if (lunchInTime) return alert('You Already Clocked Your Lunch!')
+                                        lunchStart()
+                                    }}><Typography variant='h4'>Start Lunch</Typography></Button>
+                                    <Box style={{ backgroundColor: 'gray', height: '50px', width: '450px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Typography variant='h4'>{lunchInTime}</Typography></Box>
+                                </Box>
+                                <Box display='flex' justifyContent='space-around' alignItems='center'>
+                                    <Button variant='contained' style={{ width: '356px', height: '110px', backgroundColor: lunchOutTime ? 'green' : '#C4C4C4' }} onClick={(e) => {
+                                        if (timer) return alert('Please end your job timer')
+                                        if (!id) return alert('please select a name')
+                                        if (lunchOutTime) return alert('You Already Clocked Your Lunch')
+                                        lunchEnd()
+                                    }}><Typography variant='h4'>End Lunch</Typography></Button>
+                                    <Box style={{ backgroundColor: 'gray', height: '50px', width: '450px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Typography variant='h4'>{lunchOutTime}</Typography></Box>
+                                </Box>
+                                <Box display='flex' justifyContent='space-around' alignItems='center'>
+                                    <Button variant='contained' style={{ width: '356px', height: '110px', backgroundColor: clockOutTime ? 'green' : '#C4C4C4' }} onClick={(e) => {
+                                        if (timer) return alert('Please end your job timer')
+                                        if (!id) return alert('please select a name')
+                                        if (clockOutTime) return alert('You Already Clocked Out!')
+                                        clockOut()
+                                    }}><Typography variant='h4'>Clock Out</Typography></Button>
+                                    <Box style={{ backgroundColor: 'gray', height: '50px', width: '450px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Typography variant='h4'>{clockOutTime}</Typography></Box>
+                                </Box>
                             </Box>
                         </Box>
                     </Box>
                 </Box>
-            </Box>
             </Collapse>
 
             {/* Jobs Section */}
             <Collapse in={showJobs} collapsedSize='100px'>
-            <Box width='100vw' color='white' style={{backgroundColor: '#555555', paddingTop: '20px', paddingBottom: '20px'}} onClick={()=>{showJobs ? setShowJobs(false) : setShowJobs(true)}}> <Typography variant='h3'>Jobs</Typography></Box>
-            
-            <Box height='500px' width='100vw' display='flex' alignItems='center' style={{ backgroundImage: `url(${JobsBG})`, backgroundSize: 'cover' }}>
-            <ScrollContainer className="scroll-container">
-                <Box maxWidth='100%' height='100%' display='flex'>
+                <Box width='100vw' color='white' style={{ backgroundColor: '#555555', paddingTop: '20px', paddingBottom: '20px' }} onClick={() => { showJobs ? setShowJobs(false) : setShowJobs(true) }}> <Typography variant='h3'>Jobs</Typography></Box>
 
-                {!jobs ? <div>Loading...</div> : !clocked ? <div>Please Clock In To Select A Job</div> : jobs.map((row) => {
-                    // if (!row.active) return null
-                    return (
-                        <Box m={5}>
-                            <Button variant='contained' style={{ minWidth: '400px', height: '200px', fontSize: '50px', backgroundColor: job === row.jobName ? 'green' : '#A3BCB6' }} onClick={(e) => {
-                                if (timer) return
-                                getTasks(row.jobName)
-                                setJob(row.jobName)
-                            }}>
-                                {row.jobName}
-                            </Button>
+                <Box height='500px' width='100vw' display='flex' alignItems='center' style={{ backgroundImage: `url(${JobsBG})`, backgroundSize: 'cover' }}>
+                    <ScrollContainer className="scroll-container">
+                        <Box maxWidth='100%' height='100%' display='flex'>
+
+                            {!jobs ? <div>Loading...</div> : !clocked ? <div>Please Clock In To Select A Job</div> : jobs.map((row) => {
+                                // if (!row.active) return null
+                                return (
+                                    <Box m={5}>
+                                        <Button variant='contained' style={{ minWidth: '400px', height: '200px', fontSize: '50px', backgroundColor: job === row.jobName ? 'green' : '#A3BCB6' }} onClick={(e) => {
+                                            if (timer) return
+                                            getTasks(row.jobName)
+                                            setJob(row.jobName)
+                                        }}>
+                                            {row.jobName}
+                                        </Button>
+                                    </Box>
+
+                                )
+                            })}
                         </Box>
-                        
-                    )
-                })}
+                    </ScrollContainer>
                 </Box>
-                </ScrollContainer>
-            </Box>
             </Collapse>
 
             {/* Tasks Section */}
             <Collapse in={showTasks} collapsedSize='100px'>
-            <Box width='100vw' color='white' style={{backgroundColor: '#555555', paddingTop: '20px', paddingBottom: '20px'}} onClick={()=>{showTasks ? setShowTasks(false) : setShowTasks(true)}}> <Typography variant='h3'>Tasks</Typography></Box>
-            <Box display='flex' flexDirection='row'>
-                <Box maxHeight='700px' width='35%'>
-                    <ScrollContainer>
-                        <Box maxHeight='700px' display='flex' flexDirection='column' flexGrow='0' justifyContent='center' alignItems='center'>
-                        {!job ? <div>Tasks Will Show Here</div> : !tasks ? <div>Loading...</div> : tasks.map((row) => {
-                    return (
-                            <Button variant='contained' style={{minHeight: '100px', minWidth:'350px', marginBottom: '40px', marginTop:'40px', backgroundColor: task===row ? 'green' : '#C4C4C4'}} onClick={(e) => {
-                                if (timer) return
-                                setTask(row)
-                            }}>
-                                {row}
-                            </Button>
-                    )
-                })}
-                        </Box>
-                    </ScrollContainer>
-                </Box>
-                <Box width='65%' pt={3} display='flex' flexDirection='column' justifyContent='space-between' alignItems='center'>
-                    <Typography variant='h4'>{!name ? 'Unselected' : name} - Task: {!task ? 'Unselected' : task}</Typography>
-                    <Timer width='100%' job={job} id={id} name={name} task={task} endTimer={endTimer} startTimer={startTimer} />
-                </Box>
-                {/* <Box width='100vw'><Typography variant='h2'>Tasks</Typography></Box>
+                <Box width='100vw' color='white' style={{ backgroundColor: '#555555', paddingTop: '20px', paddingBottom: '20px' }} onClick={() => { showTasks ? setShowTasks(false) : setShowTasks(true) }}> <Typography variant='h3'>Tasks</Typography></Box>
+                <Box display='flex' flexDirection='row'>
+                    <Box maxHeight='700px' width='35%'>
+                        <ScrollContainer>
+                            <Box maxHeight='700px' display='flex' flexDirection='column' flexGrow='0' justifyContent='center' alignItems='center'>
+                                {!job ? <div>Tasks Will Show Here</div> : !tasks ? <div>Loading...</div> : tasks.map((row) => {
+                                    return (
+                                        <Button variant='contained' style={{ minHeight: '100px', minWidth: '350px', marginBottom: '40px', marginTop: '40px', backgroundColor: task === row ? 'green' : '#C4C4C4' }} onClick={(e) => {
+                                            if (timer) return
+                                            setTask(row)
+                                        }}>
+                                            {row}
+                                        </Button>
+                                    )
+                                })}
+                            </Box>
+                        </ScrollContainer>
+                    </Box>
+                    <Box width='65%' pt={3} display='flex' flexDirection='column' justifyContent='space-between' alignItems='center'>
+                        <Typography variant='h4'>{!name ? 'Unselected' : name} - Task: {!task ? 'Unselected' : task}</Typography>
+                        <Timer width='100%' job={job} id={id} name={name} task={task} endTimer={endTimer} startTimer={startTimer} />
+                    </Box>
+                    {/* <Box width='100vw'><Typography variant='h2'>Tasks</Typography></Box>
                 {!job ? <div>Tasks Will Show Here</div> : !tasks ? <div>Loading...</div> : tasks.map((row) => {
                     return (
                         <Box m={5}>
@@ -339,11 +360,11 @@ export default function MainPanel(props) {
                         </Box>
                     )
                 })} */}
-            </Box>
+                </Box>
             </Collapse>
             <Collapse in={showFiles} collapsedSize='100px'>
-            <Box width='100vw' color='white' style={{backgroundColor: '#555555', paddingTop: '20px', paddingBottom: '20px'}} onClick={()=>{showFiles ? setShowFiles(false) : setShowFiles(true)}}> <Typography variant='h3'>Files</Typography></Box>
-            {!job ? null : <FileView job={job}/>}
+                <Box width='100vw' color='white' style={{ backgroundColor: '#555555', paddingTop: '20px', paddingBottom: '20px' }} onClick={() => { showFiles ? setShowFiles(false) : setShowFiles(true) }}> <Typography variant='h3'>Files</Typography></Box>
+                {!job ? null : <FileView job={job} />}
             </Collapse>
 
             {/* Clock For Jobs */}

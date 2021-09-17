@@ -40,6 +40,7 @@ function App() {
     checkLogin()
     checkKey()
   },[])
+  
   return (
     <div className="App">
       <Route path={`/main`}>
