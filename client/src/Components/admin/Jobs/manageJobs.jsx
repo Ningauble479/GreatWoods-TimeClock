@@ -36,10 +36,11 @@ function JobManager ()  {
 
 
     return (
+        <Box flex='1'>
+        <Box display='flex' flexDirection='row' justifyContent='flex-start' alignItems='center' pl={5} pt={3} pb={3} borderBottom='1px solid gray'>
+        <WorkIcon style={{fontSize: '52px', marginRight: '15px'}}/><Typography variant='h5'>Manage Jobs</Typography>
+    </Box>
         <Box flex='1' display='flex' justifyContent='center' pt={5} pb={5}>
-            <Box display='flex' flexDirection='row' justifyContent='flex-start' alignItems='center' pl={5} pt={3} pb={3} borderBottom='1px solid gray'>
-                <WorkIcon style={{fontSize: '52px', marginRight: '15px'}}/><Typography variant='h5'>Manage Jobs</Typography>
-            </Box>
             
             <Box width='90%' borderBottom='1px solid rgba(215, 215, 215, 1)' borderTop='1px solid rgba(215, 215, 215, 1)'>
             <Table>
@@ -60,6 +61,7 @@ function JobManager ()  {
                 </TableBody>
             </Table>
             </Box>
+        </Box>
         </Box>
     )
 

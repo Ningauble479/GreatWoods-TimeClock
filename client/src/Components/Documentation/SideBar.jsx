@@ -1,7 +1,7 @@
 import { Box, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
-const links = ['main/nameChooser', 'main/employeeTimeClock', 'main/Jobs', 'main/Tasks', 'main/Files', 'admin/']
+const links = ['main/nameChooser', 'main/employeeTimeClock', 'main/Jobs', 'main/Tasks', 'main/Files']
 
 function SideBarLink(props){
     return (
