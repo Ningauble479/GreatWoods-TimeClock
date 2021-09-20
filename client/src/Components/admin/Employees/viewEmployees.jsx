@@ -19,7 +19,7 @@ export default function ViewEmployees() {
     return (
         <Box style={{ flex: '1' }} display='flex' flexDirection='column'>
             <Box display='flex' flexDirection='row' justifyContent='flex-start' alignItems='center' pl={5} pt={3} pb={3} borderBottom='1px solid gray'>
-                <PersonIcon style={{fontSize: '52px', marginRight: '15px'}}/><Typography variant='h5'>Add a New Job</Typography>
+                <PersonIcon style={{fontSize: '52px', marginRight: '15px'}}/><Typography variant='h5'>View Employees</Typography>
             </Box>
             <Box display='flex' justifyContent='center' width='100%' mt={5}>
             <Table style={{width: '90%', borderBottom:'1px solid rgba(215, 215, 215, 1)', borderTop:'1px solid rgba(215, 215, 215, 1)'}}>

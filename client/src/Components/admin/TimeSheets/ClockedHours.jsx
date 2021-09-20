@@ -100,7 +100,7 @@ export default function ClockedHours () {
                 <Alert severity={!aType ? 'success' : aType}>{alert}</Alert>
             </Collapse>
         <Box display='flex' flexDirection='row' justifyContent='flex-start' alignItems='center' pl={5} pt={3} pb={3} borderBottom='1px solid gray'>
-            <AccessTimeIcon style={{fontSize: '52px', marginRight: '15px'}}/><Typography variant='h5'>Check Time Sheets</Typography>
+            <AccessTimeIcon style={{fontSize: '52px', marginRight: '15px'}}/><Typography variant='h5'>Check Clocked Hours</Typography>
         </Box>
         <Box display='flex' flexDirection='column' justifyContent='space-between'>
         <Box display='flex' justifyContent='center' flexDirection='column' pl={5} pt={5} pr={5}>

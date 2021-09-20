@@ -20,10 +20,10 @@ let jobsList = [
         name: 'Manage Jobs',
         link: 'manageJobs'
     },
-    {
-        name: 'Assign Jobs',
-        link: 'assignJobs'
-    }
+    // {
+    //     name: 'Assign Jobs',
+    //     link: 'assignJobs'
+    // }
 ]
 
 let timeSheets = [
