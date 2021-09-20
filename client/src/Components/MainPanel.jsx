@@ -1,21 +1,20 @@
 import { useEffect, useState } from "react";
 import Timer from "./Timer";
-import { Box, Button, Collapse, Typography, Tooltip, IconButton } from '@material-ui/core'
+import { Box, Button, Collapse, Typography, Tooltip } from '@material-ui/core'
 import FileView from './FileView'
 import axiosScript from "../scripts/axiosScripts";
 import { Link } from 'react-router-dom'
-import { format, formatISO, parseISO } from 'date-fns'
+import { format,  parseISO } from 'date-fns'
 import bigLogo from '../images/bigLogo.svg'
 import HeaderIMG from '../images/04.jpg'
-import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import AnalogueClock from 'react-analogue-clock';
 import ScrollContainer from 'react-indiana-drag-scroll'
 import JobsBG from '../images/JobsBG.jpg'
-import FilesBG from '../images/FilesBG.jpg'
 import DescriptionIcon from '@material-ui/icons/Description';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
+import HelpIcon from '@material-ui/icons/Help';
 
 export default function MainPanel(props) {
 
@@ -143,33 +142,32 @@ export default function MainPanel(props) {
         setClockInOpen(true)
         let today = format(new Date(), 'MM dd yyyy')
         let { data } = await axiosScript('post', '/api/timeClock/getClockIn', { search: { $and: [{ user: id }, { day: today }] } })
-        console.log(data.data)
-        if (!data.success) {
+        if (!data.success || !data || !data.data || data.data.length < 1) {
             setClockInTime(null)
             setClockOutTime(null)
             setLunchInTime(null)
             setLunchOutTime(null)
             return
         }
-        if (data.data.clockIn) {
-            let parseTime = parseISO(data.data.clockIn)
+        if (data.data[0].clockIn) {
+            let parseTime = parseISO(data.data[0].clockIn)
             let newTime = format(parseTime, 'h:mm b d LLL, yyyy')
             console.log(newTime)
             setClockInTime(newTime)
             setClocked(true)
         }
-        if (data.data.lunchIn) {
-            let parseTime = parseISO(data.data.lunchIn)
+        if (data.data[0].lunchIn) {
+            let parseTime = parseISO(data.data[0].lunchIn)
             let newTime = format(parseTime, 'h:mm b d LLL, yyyy')
             setLunchInTime(newTime)
         }
-        if (data.data.lunchOut) {
-            let parseTime = parseISO(data.data.lunchOut)
+        if (data.data[0].lunchOut) {
+            let parseTime = parseISO(data.data[0].lunchOut)
             let newTime = format(parseTime, 'h:mm b d LLL, yyyy')
             setLunchOutTime(newTime)
         }
-        if (data.data.clockOut) {
-            let parseTime = parseISO(data.data.clockOut)
+        if (data.data[0].clockOut) {
+            let parseTime = parseISO(data.data[0].clockOut)
             let newTime = format(parseTime, 'h:mm b d LLL, yyyy')
             setClockOutTime(newTime)
         }
@@ -185,7 +183,7 @@ export default function MainPanel(props) {
     return (
         <Box style={{ overflowX: 'hidden' }} width='100vw' height='100vh'>
             {/* NavBar */}
-            <Box mt={2} pl={2} maxHeight='228px' borderBottom='1px solid black' display='flex' justifyContent='flex-end' pb={2}>
+            <Box mt={2} pl={2} maxHeight='228px' display='flex' justifyContent='flex-end' pb={2}>
                 <Box style={{justifyContent: 'center', display: 'flex', flex: '1', paddingLeft: '320px'}}>
                     <img src={bigLogo} style={{ maxWidth: '25vw' }} />
                 </Box>
@@ -207,10 +205,9 @@ export default function MainPanel(props) {
             </Box>
 
 
-
+            <Box width='100%' display='flex' borderBottom='1px solid black' justifyContent='flex-end'><Tooltip title='Help Names'><Link to='/documentation/main/nameChooser' className='linkClean'><HelpIcon/></Link></Tooltip></Box>
             {/* Name Picking Section */}
             <Box style={{ backgroundImage: `url(${HeaderIMG})`, backgroundSize: 'cover' }} height='473px' borderBottom='1px solid black' display='flex' flexDirection='row' flexWrap='nowrap' alignItems='center'>
-
                 {!names ? <div>Loading...</div> : <Box display='flex' width='100vw'>
                     <ScrollContainer className="scroll-container">
                         <Box maxWidth='100%' display='flex'>
@@ -238,7 +235,7 @@ export default function MainPanel(props) {
             {/* Clock In/Out Section */}
             <Collapse in={clockInOpen} collapsedSize='100px'>
                 <Box>
-                    <Box width='100vw' color='white' style={{ backgroundColor: '#555555', paddingTop: '20px', paddingBottom: '20px' }} onClick={() => { clockInOpen ? setClockInOpen(false) : setClockInOpen(true) }}> <Typography variant='h3'>Employee Time Clock</Typography></Box>
+                    <Box display='flex' justifyContent='center' width='100vw' color='white' style={{ backgroundColor: '#555555', paddingTop: '20px', paddingBottom: '20px' }} onClick={() => { clockInOpen ? setClockInOpen(false) : setClockInOpen(true) }}> <Typography variant='h3'>Employee Time Clock</Typography> <Box height='100%' pl={2}><Tooltip title='Help Time Clock'><Link to='/documentation/main/employeeTimeClock' className='linkClean'><HelpIcon/></Link></Tooltip></Box></Box>
                     <Box p={5} borderBottom='1px solid black' display='flex' flexDirection='row' justifyContent='space-around' alignContent='space-between' flexWrap='nowrap'>
                         <Box width='35%' display='flex' flexDirection='column' alignItems='center' justifyContent='center'>
 
@@ -297,7 +294,7 @@ export default function MainPanel(props) {
 
             {/* Jobs Section */}
             <Collapse in={showJobs} collapsedSize='100px'>
-                <Box width='100vw' color='white' style={{ backgroundColor: '#555555', paddingTop: '20px', paddingBottom: '20px' }} onClick={() => { showJobs ? setShowJobs(false) : setShowJobs(true) }}> <Typography variant='h3'>Jobs</Typography></Box>
+                <Box display='flex' justifyContent='center' width='100vw' color='white' style={{ backgroundColor: '#555555', paddingTop: '20px', paddingBottom: '20px' }} onClick={() => { showJobs ? setShowJobs(false) : setShowJobs(true) }}> <Typography variant='h3'>Jobs</Typography> <Box height='100%' pl={2}><Tooltip title='Help Jobs'><Link to='/documentation/main/Jobs' className='linkClean'><HelpIcon/></Link></Tooltip></Box></Box>
 
                 <Box height='500px' width='100vw' display='flex' alignItems='center' style={{ backgroundImage: `url(${JobsBG})`, backgroundSize: 'cover' }}>
                     <ScrollContainer className="scroll-container">
@@ -325,7 +322,7 @@ export default function MainPanel(props) {
 
             {/* Tasks Section */}
             <Collapse in={showTasks} collapsedSize='100px'>
-                <Box width='100vw' color='white' style={{ backgroundColor: '#555555', paddingTop: '20px', paddingBottom: '20px' }} onClick={() => { showTasks ? setShowTasks(false) : setShowTasks(true) }}> <Typography variant='h3'>Tasks</Typography></Box>
+                <Box display='flex' justifyContent='center' width='100vw' color='white' style={{ backgroundColor: '#555555', paddingTop: '20px', paddingBottom: '20px' }} onClick={() => { showTasks ? setShowTasks(false) : setShowTasks(true) }}> <Typography variant='h3'>Tasks</Typography> <Box height='100%' pl={2}><Tooltip title='Help Tasks'><Link to='/documentation/main/Tasks' className='linkClean'><HelpIcon/></Link></Tooltip></Box></Box>
                 <Box display='flex' flexDirection='row'>
                     <Box maxHeight='700px' width='35%'>
                         <ScrollContainer>
@@ -363,7 +360,7 @@ export default function MainPanel(props) {
                 </Box>
             </Collapse>
             <Collapse in={showFiles} collapsedSize='100px'>
-                <Box width='100vw' color='white' style={{ backgroundColor: '#555555', paddingTop: '20px', paddingBottom: '20px' }} onClick={() => { showFiles ? setShowFiles(false) : setShowFiles(true) }}> <Typography variant='h3'>Files</Typography></Box>
+                <Box display='flex' justifyContent='center' width='100vw' color='white' style={{ backgroundColor: '#555555', paddingTop: '20px', paddingBottom: '20px' }} onClick={() => { showFiles ? setShowFiles(false) : setShowFiles(true) }}> <Typography variant='h3'>Files</Typography> <Box height='100%' pl={2}> <Tooltip title='Help Files'><Link to='/documentation/main/Files' className='linkClean'><HelpIcon/></Link></Tooltip></Box></Box>
                 {!job ? null : <FileView job={job} />}
             </Collapse>
 

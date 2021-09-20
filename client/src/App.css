@@ -65,3 +65,7 @@ code {
   cursor: pointer;
   color: gray
 }
+
+.tableRow:hover {
+  background-color: lightgray;
+}

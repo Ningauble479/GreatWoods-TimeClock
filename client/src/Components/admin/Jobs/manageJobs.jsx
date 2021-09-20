@@ -1,6 +1,6 @@
 import { Box, Button, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core'
 import { useState, useEffect } from 'react'
-import axiosScript from '../../scripts/axiosScripts'
+import axiosScript from '../../../scripts/axiosScripts'
 import JobRow from './jobRow'
 
 
@@ -34,10 +34,12 @@ function JobManager ()  {
 
 
     return (
-        <Box>
+        <Box flex='1' display='flex' justifyContent='center' pt={5} pb={5}>
+            
+            <Box width='90%' borderBottom='1px solid rgba(215, 215, 215, 1)' borderTop='1px solid rgba(215, 215, 215, 1)'>
             <Table>
                 <TableHead>
-                    <TableRow>
+                    <TableRow style={{backgroundColor: 'rgba(233, 234, 237, 1)'}}>
                         <TableCell>Job Name</TableCell>
                         <TableCell>Active?</TableCell>
                         <TableCell>Finish Job</TableCell>
@@ -52,6 +54,7 @@ function JobManager ()  {
                         })}
                 </TableBody>
             </Table>
+            </Box>
         </Box>
     )
 

@@ -4,6 +4,7 @@ import LogoImg from '../../images/LogoLight.png'
 import PersonIcon from '@material-ui/icons/Person';
 import WorkIcon from '@material-ui/icons/Work';
 import Work from "@material-ui/icons/Work";
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
 
 export default function NavBar() {
     
@@ -22,15 +23,17 @@ export default function NavBar() {
                     <Link className='linkClean' to='/admin/accounts/newEmployee'><Box><PersonIcon style={{fontSize: '45px'}}/> <Typography variant='h5'> Workers </Typography></Box></Link>
                 </Box>
                 <Box height='100%'>
-
                     <Link className='linkClean' to='/admin/jobs/newJob'><Box><WorkIcon style={{fontSize: '45px'}}/> <Typography variant='h5'> Jobs </Typography></Box></Link>
                 </Box>
-                <Box>
+                <Box height='100%'>
+                    <Link className='linkClean' to='/admin/times/checkTimeSheets'><Box><AccessTimeIcon style={{fontSize: '45px'}}/><Typography variant='h5'> Time Sheets </Typography></Box></Link>
+                </Box>
+                {/* <Box>
                     <Link className='linkClean' to='/admin/checkTimeSheet'>Check Time Sheets</Link>
                 </Box>
                 <Box>
                     <Link className='linkClean' to='/admin/addPunch'>Add/Edit Punch</Link>
-                </Box>
+                </Box> */}
             </Box>
             <Button color="inherit" onClick={()=>{logOut()}}>Logout</Button>
           </Toolbar>

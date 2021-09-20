@@ -7,6 +7,7 @@
   "dependencies": {
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.60",
     "@mui/icons-material": "^5.0.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
@@ -15,6 +16,7 @@
     "immutability-helper": "^3.1.1",
     "react": "^17.0.2",
     "react-analogue-clock": "^0.3.2",
+    "react-calendar": "^3.4.0",
     "react-dom": "^17.0.2",
     "react-indiana-drag-scroll": "^2.0.1",
     "react-multi-carousel": "^2.6.5",

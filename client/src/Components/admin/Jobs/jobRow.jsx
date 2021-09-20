@@ -12,7 +12,7 @@ function JobRow (props) {
         else{ props.reactiveJob(e) }
     }
     return (
-        <TableRow>
+        <TableRow className='tableRow' style={{"&:hover":{background: 'gray'}}}>
             <TableCell>
                 {props.row.jobName}
             </TableCell>

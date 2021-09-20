@@ -11,6 +11,36 @@ let workersList = [{
     link: 'viewEmployees'
     }]
 
+let jobsList = [
+    {
+        name: 'New Job',
+        link: 'newJob'
+    },
+    {
+        name: 'Manage Jobs',
+        link: 'manageJobs'
+    },
+    {
+        name: 'Assign Jobs',
+        link: 'assignJobs'
+    }
+]
+
+let timeSheets = [
+    {
+        name: 'Check Time Sheets',
+        link: 'checkTimeSheets'
+    },
+    {
+        name: 'Add Punch',
+        link: 'addPunch'
+    },
+    {
+        name: 'View Clocked Hours',
+        link: 'clockedHours'
+    }
+]
+
 export default function SideBar (){
     let [sideBarList, setSideBarList] = useState(null)
     let [mainLink, setMainLink] = useState(null)
@@ -21,6 +51,14 @@ export default function SideBar (){
         if(url.includes('accounts')){
         setMainLink('accounts')
         setSideBarList(workersList)}
+        else if(url.includes('jobs')){
+        setMainLink('jobs')
+        setSideBarList(jobsList)
+        }
+        else if(url.includes('times')){
+        setMainLink('times')
+        setSideBarList(timeSheets)
+        }
         else {
             setMainLink(null)
             setSideBarList(null)
