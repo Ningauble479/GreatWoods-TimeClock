@@ -71,7 +71,7 @@ export default function SideBar (){
     }
 
     useEffect(()=>{
-        setInterval( CheckTimes, 1000 )
+        setInterval( CheckTimes, 500 )
 
     },[])
     return (

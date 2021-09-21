@@ -36,11 +36,6 @@ let AddPunch = () => {
     }
 
     let addPunch = async () => {
-        console.log(id)
-        console.log(job)
-        console.log(task)
-        console.log(week)
-        console.log(date)
         if(!id || !job || !task || !week || !date)return alert('Please fill in all info')
         if(time.hours === 0 && time.minutes === 0 && time.seconds === 0) return alert('Please Input How Much Time To Add')
         let data = await axiosScript('post', '/api/timeClock/newClock', {id: id, job: job, task: task, week: week, day: date, time: time, dayName: dayName})
