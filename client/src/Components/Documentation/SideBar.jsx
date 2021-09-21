@@ -1,7 +1,7 @@
 import { Box, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
-const links = ['main/nameChooser', 'main/employeeTimeClock', 'main/Jobs', 'main/Tasks', 'main/Files']
+const links = ['main/nameChooser', 'main/employeeTimeClock', 'main/Jobs', 'main/Tasks', 'main/Files', 'admin/timeSheetChecker', 'admin/manageJobs', 'admin/addEmployee', 'admin/addJob', 'admin/timePunch', 'admin/clockedHours', 'admin/viewEmployees', 'admin/templates']
 
 function SideBarLink(props){
     return (
@@ -16,4 +16,4 @@ export default function SideBar() {
             {links.map((row)=>{return <SideBarLink link={row}/>})}
         </Box>
     )
-} 
+}

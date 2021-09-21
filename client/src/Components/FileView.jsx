@@ -5,6 +5,9 @@ import FolderIcon from '@material-ui/icons/Folder';
 import ShowPDF from './showpdf';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 import FilesBG from '../images/FilesBG.jpg'
+import ImageIcon from '@material-ui/icons/Image';
+import ShowIMG from './showIMG'
+
 export default function FileView (props) {
 
     let [ folders, setFolders ] = useState(null)
@@ -13,6 +16,7 @@ export default function FileView (props) {
     let [ folderView, setFolderView ] = useState(false)
     let [ pdf, setpdf ] = useState(null)
     let [ path, setPath ] = useState(`jobs/${props.job}`)
+    let [ IMG, setIMG ] = useState(null)
 
     let getFolders = async () => {
         let {data, config} = await axiosScript('post', '/api/files/getJobFolders', {job: props.job})
@@ -29,8 +33,12 @@ export default function FileView (props) {
         if(data.type === 'dir'){
             setFolders(data.folders)
         }
-        else {
+        else if(data.type === '.pdf') {
             setpdf(data.data.data)
+            setFiles(null)
+            setFolderView(false)
+        } else {
+            setIMG(data.data.data)
             setFiles(null)
             setFolderView(false)
         }
@@ -49,8 +57,11 @@ export default function FileView (props) {
         setCurrentFolder(null)
         setpdf(null)
         setPath(`jobs/${props.job}`)
+        setIMG(null)
         getFolders()
     }
+
+    let imgCheckArr = ['.jpg', '.png', '.gif', '.webp', '.tiff', '.psd', '.raw', '.bmp', '.heif', '.indd', '.jpeg', '.svg', '.ai', '.eps']
 
     useEffect(()=>{
         getFolders()
@@ -66,7 +77,7 @@ export default function FileView (props) {
                 {!folderView ? null : folders.map((row)=>{
                     return (
                     <Box className='addHover' m={5} fontSize='150px' width='200px' height='200px' onClick={()=>{getFiles(row)}}>
-                        {row.includes('pdf') ? <PictureAsPdfIcon fontSize='inherit'/> : <FolderIcon fontSize='inherit' style={{color: 'lightgoldenrodyellow'}}/>}
+                        {row.includes('pdf') ? <PictureAsPdfIcon fontSize='inherit'/> : imgCheckArr.some(i => row.includes(i)) ? <ImageIcon fontSize='inherit'/> : <FolderIcon fontSize='inherit' style={{color: 'lightgoldenrodyellow'}}/>}
                         <Typography variant='h4'>{row}</Typography>
                     </Box>
                     )
@@ -77,6 +88,7 @@ export default function FileView (props) {
                     )
                 })}
                 {!pdf ? null : <ShowPDF pdf={pdf}/>}
+                {!IMG ? null : <ShowIMG img={IMG}/>}
             </Box>
         </Box>
     )

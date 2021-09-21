@@ -13,7 +13,7 @@ import SideBar from "./sideBar";
 import NewEmployee from "./Employees/newEmployee";
 import ViewEmployees from "./Employees/viewEmployees";
 import ClockedHours from "./TimeSheets/ClockedHours";
-
+import CreateTemplate from './Jobs/createTemplate'
 
 export default function AdminMain () {
 
@@ -46,6 +46,9 @@ export default function AdminMain () {
         </Route>
         <Route path='/admin/jobs/manageJobs'>
             <ManageJobs/>
+        </Route>
+        <Route path='/admin/jobs/createTemplate'>
+            <CreateTemplate/>
         </Route>
 
         {/* Admin Panel Time Management Routes */}

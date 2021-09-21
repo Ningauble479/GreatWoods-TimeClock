@@ -20,6 +20,10 @@ let jobsList = [
         name: 'Manage Jobs',
         link: 'manageJobs'
     },
+    {
+        name: 'New Template',
+        link: 'createTemplate'
+    }
     // {
     //     name: 'Assign Jobs',
     //     link: 'assignJobs'

@@ -1,6 +1,6 @@
 
 import fs from 'fs'
-
+import path from 'path'
 
 export default async (req,res) => {
     if(fs.lstatSync(`./${req.body.path}`).isDirectory()){
@@ -12,9 +12,11 @@ export default async (req,res) => {
         }
     }
     try {
+        const ext = path.extname(`./${req.body.path}`)
         const data = await fs.readFileSync(`./${req.body.path}`)
-        console.log(data)
-        return res.json({success: true, type: 'file', data: data})
+        console.log(ext)
+        
+        return res.json({success: true, type: ext, data: data})
     } catch (err) {
         console.log(err)
     }

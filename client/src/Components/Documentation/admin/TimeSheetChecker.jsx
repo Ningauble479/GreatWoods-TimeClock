@@ -21,9 +21,9 @@ export default function ShowPDF (props) {
         <div style={{flex:'1', display: 'flex', flexDirection:'column', alignContent: 'center', justifyItems: 'center'}} ref={ref}>
 
             <Document
-            file={{data: props.pdf}}
+            file={props.pdf}
             >
-                <Page height={height} width={width} size='A4' pageNumber={pageNumber}/>
+                <Page height={height} width={width} size='A4' pageNumber={props.page}/>
 
             </Document>
             {/* <Box display='flex' justifyContent='space-around'>
