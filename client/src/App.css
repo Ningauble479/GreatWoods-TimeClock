@@ -69,3 +69,15 @@ code {
 .tableRow:hover {
   background-color: lightgray;
 }
+
+.dropdownRow {
+  min-height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dropdownRow:hover {
+  background-color: gainsboro;
+  cursor: pointer;
+}

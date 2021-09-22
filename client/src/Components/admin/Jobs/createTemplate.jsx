@@ -75,7 +75,7 @@ export default function CreateFolderTemplates () {
                 <WorkIcon style={{fontSize: '52px', marginRight: '15px'}}/><Typography variant='h5'>Create a Job Template</Typography>
             </Box>
             <Box flex='1' display='flex' flexDirection='column' p={5}>
-                <Box width='100%' mb={5} display='flex' justifyContent='space-between'><Typography variant='h5'>New Task</Typography><TextField style={{width: '70%'}} id="filled-basic" label="Task Name" onKeyDown={(e)=>{if(e.key === 'Enter') createNewFolder()}} value={newFolder} onChange={(e)=>{setNewFolder(e.target.value)}} /></Box>
+                <Box width='100%' mb={5} display='flex' justifyContent='space-between'><Typography variant='h5'>New Task</Typography><TextField style={{width: '70%'}} id="filled-basic" label="Task Name" onKeyPress={(e)=>{if(e.key === 'Enter') createNewFolder()}} value={newFolder} onChange={(e)=>{setNewFolder(e.target.value)}} /></Box>
                 <Box width='100%' display='flex' justifyContent='center' borderBottom='1px solid gray' pb={2}><Button variant='outlined' onClick={()=>{createNewFolder()}}>Add Task</Button></Box>
             </Box>
             <Box flex='1' display='flex' justifyContent='center'>

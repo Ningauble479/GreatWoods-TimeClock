@@ -10,6 +10,8 @@ import GTS from './getTimeSheets.js'
 import GTSD from './getTimeSheetDay.js'
 import GTSJ from './getTimeSheetJob.js'
 import UJ from './updateJob.js'
+import NC from './client/addClient.js'
+import GC from './client/getClients.js'
 
 routes.post('/addUser', AU)
 routes.post('/getAccounts', GA)
@@ -21,5 +23,7 @@ routes.post('/getTimeSheets', GTS)
 routes.post('/getTimeSheetDay', GTSD)
 routes.post('/getTimeSheetJob', GTSJ)
 routes.post('/updateJobs', UJ)
+routes.post('/newClient', NC)
+routes.post('/getClients', GC)
 
 export default routes;

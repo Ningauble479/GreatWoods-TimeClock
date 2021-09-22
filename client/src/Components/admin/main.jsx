@@ -14,7 +14,10 @@ import NewEmployee from "./Employees/newEmployee";
 import ViewEmployees from "./Employees/viewEmployees";
 import ClockedHours from "./TimeSheets/ClockedHours";
 import CreateTemplate from './Jobs/createTemplate'
-
+import AddClient from "./Clients/AddClient";
+import ViewClient from "./Clients/viewClients";
+import ClientProfile from './Clients/clientProfile'
+import JobProfile from "./Jobs/jobProfile";
 export default function AdminMain () {
 
     return (
@@ -50,6 +53,9 @@ export default function AdminMain () {
         <Route path='/admin/jobs/createTemplate'>
             <CreateTemplate/>
         </Route>
+        <Route path='/admin/jobs/jobProfile/:id'>
+            <JobProfile/>    
+        </Route>
 
         {/* Admin Panel Time Management Routes */}
         <Route exact path='/admin/times'>
@@ -65,15 +71,21 @@ export default function AdminMain () {
             <ClockedHours/>
         </Route>
 
-        <Route path='/admin/folderTemplates'>
-            <CreateFolderTemplates/>
+        {/* Admin Panel Client Routes */}
+        <Route exact path='/admin/clients'>
+            <Redirect to='/admin/clients/addClients'/>
         </Route>
-        <Route path='/admin/createJobs'>
-            <CreateJob/>
+        <Route path='/admin/clients/addClients'>
+            <AddClient/>
         </Route>
-        <Route path='/admin/checkTimeSheet'>
-            <CheckTimeSheets/>
+        <Route path='/admin/clients/viewClients'>
+            <ViewClient/>
         </Route>
+        <Route path='/admin/clients/clientProfile/:id'>
+            <ClientProfile/>    
+        </Route>
+
+        
         <Route path={`${process.env.PUBLIC_URL}/admin/addPunch`}>
             <AddPunch/>
         </Route>

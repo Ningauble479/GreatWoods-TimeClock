@@ -45,6 +45,17 @@ let timeSheets = [
     }
 ]
 
+let clients = [
+    {
+        name: 'Add Clients',
+        link: 'addClients'
+    },
+    {
+        name: 'View Clients',
+        link: 'viewClients'
+    }
+]
+
 export default function SideBar (){
     let [sideBarList, setSideBarList] = useState(null)
     let [mainLink, setMainLink] = useState(null)
@@ -63,6 +74,10 @@ export default function SideBar (){
         setMainLink('times')
         setSideBarList(timeSheets)
         }
+        else if(url.includes('clients')){
+        setMainLink('clients')
+        setSideBarList(clients)
+        }
         else {
             setMainLink(null)
             setSideBarList(null)
@@ -72,8 +87,8 @@ export default function SideBar (){
 
     useEffect(()=>{
         setInterval( CheckTimes, 500 )
-
     },[])
+    
     return (
         <Box display='flex' flexDirection='column' maxWidth='15vw' minWidth='15vw' pt={5} borderRight='1px solid black' style={{flex: '1'}}>
             {!sideBarList ? <div>loading...</div> : !mainLink ? <div>loading...</div> : sideBarList.map((row,i)=>{

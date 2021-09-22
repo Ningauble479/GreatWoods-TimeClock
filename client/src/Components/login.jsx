@@ -12,10 +12,11 @@ export default function Login () {
 
 
     let alertLogic = (message, type) => {
+        setOpen(false)
         setAlert(message)
         setAType(type)
         setOpen(true)
-        setTimeout(()=>{setOpen(false)},3000)
+        setTimeout(()=>{setOpen(false)}, 3000)
     }
 
     let setPasscode = async (level) => {
@@ -30,8 +31,8 @@ export default function Login () {
     }
     return (
         <Box flex='1' flexDirection='column' height='100vh' width='100vw' display='flex' justifyContent='center' alignItems='center'>
-            <Box style={{justifyContent: 'center', display: 'flex', flex: '1', width: '500px', maxHeight: '300px'}}>
-                <img src={bigLogo} style={{ maxWidth: '25vw' }} />
+            <Box style={{justifyContent: 'center', display: 'flex', flex: '1', width: '500px', maxHeight: '300px', marginLeft: '20px'}}>
+                <img src={bigLogo} style={{ maxWidth: '25vw'}} />
             </Box>
             <Box height='300px' width='500px' border='1px solid gray' boxShadow='1' borderRadius='15px' display='flex' justifyContent='space-around' alignItems='center' flexDirection='column'>
             <Typography variant='h3'>Login</Typography>

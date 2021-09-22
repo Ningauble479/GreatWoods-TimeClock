@@ -5,6 +5,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import WorkIcon from '@material-ui/icons/Work';
 import Work from "@material-ui/icons/Work";
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import PeopleIcon from '@material-ui/icons/People';
 
 export default function NavBar() {
     
@@ -27,6 +28,9 @@ export default function NavBar() {
                 </Box>
                 <Box height='100%'>
                     <Link className='linkClean' to='/admin/times/checkTimeSheets'><Box><AccessTimeIcon style={{fontSize: '45px'}}/><Typography variant='h5'> Time Sheets </Typography></Box></Link>
+                </Box>
+                <Box height='100%'>
+                    <Link className='linkClean' to='/admin/clients/addClients'><Box><PeopleIcon style={{fontSize: '45px'}}/><Typography variant='h5'> Clients </Typography></Box></Link>
                 </Box>
                 {/* <Box>
                     <Link className='linkClean' to='/admin/checkTimeSheet'>Check Time Sheets</Link>

@@ -1,7 +1,7 @@
-import { useState, react } from 'react'
-import { Box, Button, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core'
-
-
+import { useState } from 'react'
+import { Button, TableCell, TableRow } from '@material-ui/core'
+import RemoveRedEye from '@material-ui/icons/RemoveRedEye'
+import { Link } from 'react-router-dom'
 function JobRow (props) {
     let [active, setActive] = useState(props.row.active)
 
@@ -12,7 +12,7 @@ function JobRow (props) {
         else{ props.reactiveJob(e) }
     }
     return (
-        <TableRow className='tableRow' style={{"&:hover":{background: 'gray'}}}>
+        <TableRow className='tableRow'>
             <TableCell>
                 {props.row.jobName}
             </TableCell>
@@ -22,6 +22,7 @@ function JobRow (props) {
             <TableCell>
                 {active ? <Button value={props.row._id} onClick={(e)=>{changeActive(false, e)}}>Finish</Button> : <Button value={props.row._id} onClick={(e)=>{changeActive(true, e)}}>Reactivate</Button>}
             </TableCell>
+            <TableCell><Link className='linkClean' to={`/admin/jobs/jobProfile/${props.row._id}`}><RemoveRedEye/></Link></TableCell>
         </TableRow>
     )
 }

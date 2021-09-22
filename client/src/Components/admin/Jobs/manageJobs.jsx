@@ -1,8 +1,7 @@
-import { Box, Button, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@material-ui/core'
+import { Box, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@material-ui/core'
 import { useState, useEffect } from 'react'
 import axiosScript from '../../../scripts/axiosScripts'
 import JobRow from './jobRow'
-
 import WorkIcon from '@material-ui/icons/Work';
 
 
@@ -49,6 +48,7 @@ function JobManager ()  {
                         <TableCell>Job Name</TableCell>
                         <TableCell>Active?</TableCell>
                         <TableCell>Finish Job</TableCell>
+                        <TableCell></TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
