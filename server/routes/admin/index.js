@@ -12,7 +12,23 @@ import GTSJ from './getTimeSheetJob.js'
 import UJ from './updateJob.js'
 import NC from './client/addClient.js'
 import GC from './client/getClients.js'
-
+import UF from './files/uploadFile.js'
+import multer from 'multer'
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        console.log('test2')
+    cb(null, `temp/`)
+  },
+  filename: function (req, file, cb) {
+    console.log(req.body)
+    const fileName = file.originalname.toLowerCase().split(' ').join('-');
+    req.body.fileName = fileName
+    cb(null, fileName )
+  }
+})
+var upload = multer({
+   storage: storage,
+})
 routes.post('/addUser', AU)
 routes.post('/getAccounts', GA)
 routes.post('/setTemplate', ST)
@@ -25,5 +41,6 @@ routes.post('/getTimeSheetJob', GTSJ)
 routes.post('/updateJobs', UJ)
 routes.post('/newClient', NC)
 routes.post('/getClients', GC)
+routes.post('/uploadFile', upload.single('file'), UF)
 
 export default routes;

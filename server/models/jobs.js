@@ -4,15 +4,15 @@ const { Schema } = mongoose;
 const jobsSchema = new Schema({
     folderTemplate: { type: Schema.Types.ObjectId, ref: 'jobTemplates' },
     jobName: String,
-    workers: [{ type: Schema.Types.ObjectId, ref:'users'}],
+    workers: [{ type: Schema.Types.ObjectId, ref:'users' }],
     timeSheets: [{ type: Schema.Types.ObjectId, ref: 'timeSheets'}],
     client: {type: Schema.Types.ObjectId, ref: 'customers'},
     lockBox: String,
-    contractor: String,
+    contractor: { type: Schema.Types.ObjectId, ref:'users' },
     billing: String,
-    supervisor: String,
+    supervisor: { type: Schema.Types.ObjectId, ref:'users' },
     superPhone: String,
-    designer: String,
+    designer: { type: Schema.Types.ObjectId, ref:'users' },
     active: Boolean
 });
 

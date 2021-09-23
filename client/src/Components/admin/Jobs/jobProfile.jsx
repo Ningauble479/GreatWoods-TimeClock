@@ -43,18 +43,21 @@ export default function JobProfile () {
             <Box flex='1' display='flex' flexDirection='column' justifyContent='center' alignItems='center' p={5} m={5}>
                 <Table style={{width:'90%'}}>
                     <TableBody>
-                <TableRow>
-                    <TableCell><Box width='100%' display='flex' justifyContent='space-between'><Typography variant='h5'>Lock Box:</Typography><Typography variant='h5'>{job.lockBox}</Typography></Box></TableCell>
+                    <TableRow>
+                    <TableCell><Box width='100%' display='flex' justifyContent='space-between'><Typography variant='h5'>Client:</Typography><Box display='flex' justifyContent='center' alignItems='center'><Typography variant='h5'>{!job.client ? 'None' : `${job.client.firstname} ${job.client.lastname}`}</Typography>{!job.client ? null : <Link to={`/admin/clients/clientProfile/${job.client._id}`} className='linkClean'><RemoveRedEyeIcon style={{marginLeft: '15px'}}/></Link>}</Box></Box></TableCell>
                 </TableRow>
                 <TableRow>
-                    <TableCell><Box width='100%' display='flex' justifyContent='space-between'><Typography variant='h5'>Contractor:</Typography><Typography variant='h5'>{job.contractor}</Typography></Box></TableCell>
-                </TableRow>
-                <TableRow><TableCell><Box width='100%' display='flex' justifyContent='space-between'><Typography variant='h5'>Supervisor:</Typography><Typography variant='h5'>{job.supervisor}</Typography></Box></TableCell></TableRow>
-                <TableRow>
-                    <TableCell><Box width='100%' display='flex' justifyContent='space-between'><Typography variant='h5'>Supervisor Phone:</Typography><Typography variant='h5'>{job.superPhone}</Typography></Box></TableCell>
+                    <TableCell><Box width='100%' display='flex' justifyContent='space-between'><Typography variant='h5'>Lock Box:</Typography><Typography variant='h5'>{!job.lockBox ? 'None' : job.lockBox}</Typography></Box></TableCell>
                 </TableRow>
                 <TableRow>
-                    <TableCell><Box width='100%' display='flex' justifyContent='space-between'><Typography variant='h5'>Designer:</Typography><Typography variant='h5'>{job.designer}</Typography></Box></TableCell>
+                    <TableCell><Box width='100%' display='flex' justifyContent='space-between'><Typography variant='h5'>Contractor:</Typography><Box display='flex' justifyContent='center' alignItems='center'><Typography variant='h5'>{!job.contractor ? 'None' : job.contractor.userName}</Typography>{!job.contractor ? null : <Link to={`/admin/accounts/employeeProfile/${job.contractor._id}`} className='linkClean'><RemoveRedEyeIcon style={{marginLeft: '15px'}}/></Link>}</Box></Box></TableCell>
+                </TableRow>
+                <TableRow><TableCell><Box width='100%' display='flex' justifyContent='space-between'><Typography variant='h5'>Supervisor:</Typography><Box display='flex' justifyContent='center' alignItems='center'><Typography variant='h5'>{!job.supervisor ? 'None' : job.supervisor.userName}</Typography>{!job.supervisor ? null : <Link to={`/admin/accounts/employeeProfile/${job.supervisor._id}`} className='linkClean'><RemoveRedEyeIcon style={{marginLeft: '15px'}}/></Link>}</Box></Box></TableCell></TableRow>
+                <TableRow>
+                    <TableCell><Box width='100%' display='flex' justifyContent='space-between'><Typography variant='h5'>Supervisor Phone:</Typography><Typography variant='h5'>{!job.superPhone ? 'None' : job.superPhone}</Typography></Box></TableCell>
+                </TableRow>
+                <TableRow>
+                    <TableCell><Box width='100%' display='flex' justifyContent='space-between'><Typography variant='h5'>Designer:</Typography><Box display='flex' justifyContent='center' alignItems='center'><Typography variant='h5'>{!job.designer ? 'None' : job.designer.userName}</Typography>{!job.designer ? null : <Link to={`/admin/accounts/employeeProfile/${job.designer._id}`} className='linkClean'><RemoveRedEyeIcon style={{marginLeft: '15px'}}/></Link>}</Box></Box></TableCell>
                 </TableRow>
                 <TableRow>
                     <TableCell><Box width='100%' display='flex' justifyContent='space-between'><Typography variant='h5'>Active:</Typography><Typography variant='h5'>{job.active ? 'Yes' : 'No'}</Typography></Box></TableCell>

@@ -2,7 +2,8 @@ import { Box, Table, TableHead, TableRow, TableCell, TableBody, Typography } fro
 import axios from '../../../scripts/axiosScripts'
 import { useEffect, useState } from "react";
 import PersonIcon from '@material-ui/icons/Person';
-
+import RemoveRedEye from "@material-ui/icons/RemoveRedEye";
+import { Link } from 'react-router-dom'
 export default function ViewEmployees() {
     let [workers, setWorkers] = useState(null)
 
@@ -31,6 +32,7 @@ export default function ViewEmployees() {
                         <TableCell>
                             Title
                         </TableCell>
+                        <TableCell></TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -40,6 +42,7 @@ export default function ViewEmployees() {
                                 <TableRow className='tableRow'>
                                     <TableCell>{row.userName}</TableCell>
                                     <TableCell>{row.jobTitle}</TableCell>
+                                    <TableCell><Link className='linkClean' to={`/admin/accounts/employeeProfile/${row._id}`}><RemoveRedEye/></Link></TableCell>
                                 </TableRow>
                             )
                         })}

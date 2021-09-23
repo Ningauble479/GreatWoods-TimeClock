@@ -1,9 +1,10 @@
 import { Box, TextField, Button, Typography, Select, MenuItem, Collapse } from '@material-ui/core'
-import { useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 import { Alert } from '@material-ui/lab'
 import axiosScript from '../../../scripts/axiosScripts'
 import WorkIcon from '@material-ui/icons/Work';
 import ClientSearch from '../../reusables/clientSearch';
+import WorkerSearch from '../../reusables/workerSearch';
 
 
 export default function CreateJob() {
@@ -23,7 +24,7 @@ export default function CreateJob() {
     let [open, setOpen] = useState(false)
     let [alert, setAlert] = useState(null)
     let [aType, setAType] = useState(null)
-    const [ selectedClient, setSelectedClient ] = useState(null)
+    const [selectedClient, setSelectedClient] = useState(null)
 
 
     let alertLogic = (message, type) => {
@@ -40,7 +41,7 @@ export default function CreateJob() {
         if (!jobName || jobName === '') {
             return alertLogic('Please Add A Job Name!', 'error')
         }
-        let { data } = await axiosScript('post', '/api/admin/createJob', { selectedTemplate, jobName, client: selectedClient._id, lockBox, contractor, billing, supervisor, superPhone, designer })
+        let { data } = await axiosScript('post', '/api/admin/createJob', { selectedTemplate, jobName, client: selectedClient._id, lockBox, contractor: contractor._id, billing, supervisor: supervisor._id, superPhone, designer: designer._id })
         console.log(data.data)
         alertLogic(`Successfully Added Job ${jobName}`, 'success')
         setTemplate('')
@@ -73,8 +74,8 @@ export default function CreateJob() {
     }
 
     let selectClient = (client) => {
-            console.log(client)
-            setSelectedClient(client)
+        console.log(client)
+        setSelectedClient(client)
     }
 
     useEffect(() => {
@@ -83,7 +84,7 @@ export default function CreateJob() {
 
 
     return (
-        
+
         <Box flex='1'>
             <Collapse in={open}>
                 <Alert severity={!aType ? 'success' : aType}>{alert}</Alert>
@@ -94,40 +95,64 @@ export default function CreateJob() {
                 </Box>
                 <Box pt={5}>
                     <form style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', flexWrap: 'wrap', paddingLeft: '25px', paddingRight: '25px' }}>
-                        <Box width='100%' mb={2} display='flex' justifyContent='space-between'> 
-                            <Typography style={{alignSelf: 'flex-end'}} variant='h5'>Job Name</Typography>
+                        <Box width='100%' mb={2} display='flex' justifyContent='space-between'>
+                            <Typography style={{ alignSelf: 'flex-end' }} variant='h5'>Job Name</Typography>
                             <TextField value={jobName} style={{ width: '50%' }} id="filled-basic" label="Job Name" onChange={(e) => { setJobName(e.target.value) }} />
                         </Box>
                         <Box width='100%' mb={2} display='flex' justifyContent='space-between'>
-                            <Typography style={{alignSelf: 'flex-end'}} variant='h5'>Client Name</Typography>
-                            <Box width='50%'><ClientSearch withBox selectClient={(client)=>{selectClient(client)}}/></Box>
+                            <Typography style={{ alignSelf: 'flex-end' }} variant='h5'>Client Name</Typography>
+                            <Box width='50%'><ClientSearch withBox selectClient={(client) => { selectClient(client) }} /></Box>
                         </Box>
-                        <Box width='100%' mb={2} display='flex' justifyContent='space-between'> 
-                            <Typography style={{alignSelf: 'flex-end'}} variant='h5'>Job Address</Typography>
+                        <Box width='100%' mb={2} display='flex' justifyContent='space-between'>
+                            <Typography style={{ alignSelf: 'flex-end' }} variant='h5'>Job Address</Typography>
                             <TextField value={address} style={{ width: '50%' }} id="filled-basic" label="Address" onChange={(e) => { setAddress(e.target.value) }} />
                         </Box>
-                        <Box width='100%' mb={2} display='flex' justifyContent='space-between'> 
-                            <Typography style={{alignSelf: 'flex-end'}} variant='h5'>Lock Box</Typography>
+                        <Box width='100%' mb={2} display='flex' justifyContent='space-between'>
+                            <Typography style={{ alignSelf: 'flex-end' }} variant='h5'>Lock Box</Typography>
                             <TextField value={lockBox} style={{ width: '50%' }} id="filled-basic" label="Lock Box" onChange={(e) => { setLockBox(e.target.value) }} />
                         </Box>
-                        <Box width='100%' mb={2} display='flex' justifyContent='space-between'> 
-                            <Typography style={{alignSelf: 'flex-end'}} variant='h5'>Contractor Assigned</Typography>
-                            <TextField value={contractor} style={{ width: '50%' }} id="filled-basic" label="Contractor" onChange={(e) => { setContractor(e.target.value) }} />
+                        <Box width='100%' mb={2} display='flex' justifyContent='space-between'>
+                            <Typography style={{ alignSelf: 'flex-end' }} variant='h5'>Contractor Assigned</Typography>
+                            <Box width='50%'><WorkerSearch
+                                withBox
+                                CB={(worker) => {
+                                    console.log(worker)
+                                    setContractor(worker)
+                                }}
+                                placeHolder={'Contractor'}
+                            /></Box>
+                            {/* <TextField value={contractor} style={{ width: '50%' }} id="filled-basic" label="Contractor" onChange={(e) => { setContractor(e.target.value) }} /> */}
                         </Box>
-                        <Box width='100%' mb={2} display='flex' justifyContent='space-between'> 
-                            <Typography style={{alignSelf: 'flex-end'}} variant='h5'>Supervisor Assigned</Typography>
-                            <TextField value={supervisor} style={{ width: '50%' }} id="filled-basic" label="Supervisor" onChange={(e) => { setSupervisor(e.target.value) }} />
+                        <Box width='100%' mb={2} display='flex' justifyContent='space-between'>
+                            <Typography style={{ alignSelf: 'flex-end' }} variant='h5'>Supervisor Assigned</Typography>
+                            <Box width='50%'><WorkerSearch
+                                withBox
+                                CB={(worker) => {
+                                    console.log(worker)
+                                    setSupervisor(worker)
+                                }}
+                                placeHolder={'Supervisor'}
+                            /></Box>
+                            {/* <TextField value={supervisor} style={{ width: '50%' }} id="filled-basic" label="Supervisor" onChange={(e) => { setSupervisor(e.target.value) }} /> */}
                         </Box>
-                        <Box width='100%' mb={2} display='flex' justifyContent='space-between'> 
-                            <Typography style={{alignSelf: 'flex-end'}} variant='h5'>Supervisor Phone Number</Typography>
+                        <Box width='100%' mb={2} display='flex' justifyContent='space-between'>
+                            <Typography style={{ alignSelf: 'flex-end' }} variant='h5'>Supervisor Phone Number</Typography>
                             <TextField value={superPhone} style={{ width: '50%' }} id="filled-basic" label="Supervisor Phone" onChange={(e) => { setSuperPhone(e.target.value) }} />
                         </Box>
-                        <Box width='100%' mb={2} display='flex' justifyContent='space-between'> 
-                            <Typography style={{alignSelf: 'flex-end'}} variant='h5'>Designer Assigned</Typography>
-                            <TextField value={designer} style={{ width: '50%' }} id="filled-basic" label="Designer" onChange={(e) => { setDesigner(e.target.value) }} />
+                        <Box width='100%' mb={2} display='flex' justifyContent='space-between'>
+                            <Typography style={{ alignSelf: 'flex-end' }} variant='h5'>Designer Assigned</Typography>
+                            <Box width='50%'><WorkerSearch
+                                withBox
+                                CB={(worker) => {
+                                    console.log(worker)
+                                    setDesigner(worker)
+                                }}
+                                placeHolder={'Designer'}
+                            /></Box>
+                            {/* <TextField value={designer} style={{ width: '50%' }} id="filled-basic" label="Designer" onChange={(e) => { setDesigner(e.target.value) }} /> */}
                         </Box>
-                        <Box width='100%' mb={2} mt={2} display='flex' justifyContent='space-between'> 
-                            <Typography style={{alignSelf: 'flex-end'}} variant='h5'>Folder Template</Typography>
+                        <Box width='100%' mb={2} mt={2} display='flex' justifyContent='space-between'>
+                            <Typography style={{ alignSelf: 'flex-end' }} variant='h5'>Folder Template</Typography>
                             <Select
                                 value={template}
                                 onChange={handleChange}

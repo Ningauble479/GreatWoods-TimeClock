@@ -18,6 +18,9 @@ import AddClient from "./Clients/AddClient";
 import ViewClient from "./Clients/viewClients";
 import ClientProfile from './Clients/clientProfile'
 import JobProfile from "./Jobs/jobProfile";
+import EmployeeProfile from "./Employees/EmployeeProfile";
+import UploadFiles from "./Files/UploadFiles";
+import ViewFiles from "./Files/ViewFiles";
 export default function AdminMain () {
 
     return (
@@ -39,6 +42,9 @@ export default function AdminMain () {
         <Route path='/admin/accounts/viewEmployees'>
             <ViewEmployees/>
         </Route>
+        <Route path='/admin/accounts/employeeProfile/:id'>
+            <EmployeeProfile/>
+        </Route>
 
         {/* Admin Panel Job Routes */}
         <Route exact path='/admin/jobs'>
@@ -48,7 +54,7 @@ export default function AdminMain () {
             <CreateJob/>
         </Route>
         <Route path='/admin/jobs/manageJobs'>
-            <ManageJobs/>
+            <ManageJobs test2={'test2'} test={()=>console.log('tessst')}/>
         </Route>
         <Route path='/admin/jobs/createTemplate'>
             <CreateTemplate/>
@@ -83,6 +89,17 @@ export default function AdminMain () {
         </Route>
         <Route path='/admin/clients/clientProfile/:id'>
             <ClientProfile/>    
+        </Route>
+
+        {/* Admin Panel Files Routes */}
+        <Route exact path='/admin/files'>
+            <Redirect to='/admin/files/uploadFiles'/>
+        </Route>
+        <Route path='/admin/files/uploadFiles'>
+            <UploadFiles/>
+        </Route>
+        <Route path='/admin/files/viewFiles'>
+            <ViewFiles/>
         </Route>
 
         

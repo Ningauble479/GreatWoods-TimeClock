@@ -5,7 +5,7 @@ import JobRow from './jobRow'
 import WorkIcon from '@material-ui/icons/Work';
 
 
-function JobManager ()  {
+function JobManager (props)  {
 
     let [jobs, setJobs] = useState(null)
 
@@ -31,6 +31,10 @@ function JobManager ()  {
 
     useEffect(()=>{
         getJobs()
+        let propsNames = Object.values(props)
+        console.log(propsNames)
+        propsNames[1]()
+
     },[])
 
 

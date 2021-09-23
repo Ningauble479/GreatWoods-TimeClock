@@ -81,3 +81,7 @@ code {
   background-color: gainsboro;
   cursor: pointer;
 }
+
+.sideBarLink:hover {
+  background-color: rgb(233, 234, 237)
+}

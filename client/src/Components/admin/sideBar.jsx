@@ -56,6 +56,17 @@ let clients = [
     }
 ]
 
+let files = [
+    {
+        name: 'Upload Files',
+        link: 'uploadFiles'
+    },
+    {
+        name: 'View Files',
+        link: 'viewFiles'
+    }
+]
+
 export default function SideBar (){
     let [sideBarList, setSideBarList] = useState(null)
     let [mainLink, setMainLink] = useState(null)
@@ -78,6 +89,10 @@ export default function SideBar (){
         setMainLink('clients')
         setSideBarList(clients)
         }
+        else if(url.includes('files')){
+            setMainLink('files')
+            setSideBarList(files)
+        }
         else {
             setMainLink(null)
             setSideBarList(null)
@@ -92,7 +107,7 @@ export default function SideBar (){
     return (
         <Box display='flex' flexDirection='column' maxWidth='15vw' minWidth='15vw' pt={5} borderRight='1px solid black' style={{flex: '1'}}>
             {!sideBarList ? <div>loading...</div> : !mainLink ? <div>loading...</div> : sideBarList.map((row,i)=>{
-                return (<Link to={`/admin/${mainLink}/${row.link}`} className='linkClean'><Box width='100%' height='50px' display='flex' justifyContent='center' alignItems='center'>{row.name}</Box></Link>)
+                return (<Link to={`/admin/${mainLink}/${row.link}`} className='linkClean'><Box className='sideBarLink' width='100%' height='50px' display='flex' justifyContent='center' alignItems='center'>{row.name}</Box></Link>)
             })}
         </Box>
     )
