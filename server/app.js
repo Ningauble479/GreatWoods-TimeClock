@@ -9,7 +9,8 @@ import bodyParser from 'body-parser';
 import cookieparser from 'cookie-parser'
 import mongoose from 'mongoose'
 // import passport from 'passport'
-const dbRoute = process.env.DBURL
+const dbRoute = `mongodb://${process.env.DBUSER}:${process.env.DBPASSWORD}@51.222.231.153:27017/${process.env.DBNAME}}?authSource=${process.env.DBNAME}`
+
 app.use(cookieparser())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -50,7 +51,7 @@ const __dirname = path.dirname(__filename);
       console.log("App listening on PORT " + port);
     });
 
-    // import passcode from './models/passcodes.js'
+//     import passcode from './models/passcodes.js'
 
 //     let newCode = new passcode ({
 //       password: 'Welcome321!',
