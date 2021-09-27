@@ -16,13 +16,14 @@ import UF from './files/uploadFile.js'
 import multer from 'multer'
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        console.log('test2')
+        
     cb(null, `temp/`)
   },
   filename: function (req, file, cb) {
-    console.log(req.body)
+    console.log('test')
     const fileName = file.originalname.toLowerCase().split(' ').join('-');
-    req.body.fileName = fileName
+    
+
     cb(null, fileName )
   }
 })
@@ -41,6 +42,6 @@ routes.post('/getTimeSheetJob', GTSJ)
 routes.post('/updateJobs', UJ)
 routes.post('/newClient', NC)
 routes.post('/getClients', GC)
-routes.post('/uploadFile', upload.single('file'), UF)
+routes.post('/uploadFile', upload.array('file', 3), UF)
 
 export default routes;

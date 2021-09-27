@@ -1,4 +1,4 @@
-import { Box, Collapse, Typography, MenuItem, Select, Input } from '@material-ui/core'
+import { Box, Collapse, Typography, MenuItem, Select, Button } from '@material-ui/core'
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import { useEffect, useState } from 'react'
 import { Alert } from '@material-ui/lab'
@@ -22,7 +22,10 @@ export default function UploadFiles () {
     let [task, setTask] = useState(null)
     let [openTasks, setOpenTasks] = useState(false)
     let [job, setJob] = useState(null)
+    let [filesState, setFiles] = useState([])
+    let [fileNames, setFileNames] = useState([])
     let [fileUploadOpen, setFileUploadOpen] = useState(false)
+
     const classes = useStyles();
 
     let alertLogic = (message, type) => {
@@ -40,15 +43,48 @@ export default function UploadFiles () {
 
     let uploadFile = async (e) => {
         if(!job || !task || !e[0]) return alertLogic('Please select a job and a task', 'error')
-        const files = new FormData()
-
-        files.append('file', e[0])
-        files.append('jobPath', job)
-        files.append('task', task)
-        let data = await axiosScript('post', '/api/admin/uploadFile', files)
+        let oldFileNames = fileNames
+        let newFileNames = oldFileNames.concat(e[0].name)
+        setFileNames(newFileNames)
+        console.log(newFileNames)
+        let oldState = filesState
+        let newState = oldState.concat(e[0])
+        setFiles(newState)
     } 
 
+    let removeFile = async (e) => {
+        let filesArray = filesState
+        let newArray = filesArray.filter((file)=>{
+            console.log(e.name)
+            return file.name !== e.name
+        })
+        let oldNames = fileNames
+        let newNames = oldNames.filter((name)=>{
+            return name !== e.name
+        })
+        setFileNames(newNames)
+        setFiles(newArray)
+        console.log(newArray)
+    }
+
+    let submitData = async (e) => {
+        const files = new FormData()
+        console.log(filesState)
+        filesState.map((file)=>{
+            files.append('file', file)
+        })
+        files.append('jobPath', job)
+        files.append('task', task)
+        fileNames.map((fileName)=>{
+            files.append('fileName', fileName)
+        })
+        let data = await axiosScript('post', '/api/admin/uploadFile', files)
+        alertLogic('Successfully uploaded a file', 'success')
+        window.location.reload()
+
+    }
     let handleChange = async (task) => {
+        setFileUploadOpen(true)
         setTask(task)
         console.log(task)
     }
@@ -73,7 +109,7 @@ export default function UploadFiles () {
                 </Box>
                 <Collapse style={{width: '100%'}} in={openTasks}>
                 <Box width='100%' mb={4} display='flex' justifyContent='space-between'>
-                            <Typography style={{ alignSelf: 'flex-end' }} variant='h5'>Folder Template</Typography>
+                            <Typography style={{ alignSelf: 'flex-end' }} variant='h5'>Task</Typography>
                             <Select
                                 value={task}
                                 onChange={(e)=>handleChange(e.target.value)}
@@ -86,11 +122,14 @@ export default function UploadFiles () {
                         </Box>
                 </Collapse>
                 <Box width='100%' mb={4} display='flex' justifyContent='space-between' alignItems='center'>
-                <Collapse style={{width: '100%'}} in={openTasks}>
+                <Collapse style={{width: '100%'}} in={fileUploadOpen}>
                 <DropzoneArea
+
                     acceptedFiles={['image/*', 'application/pdf']}
                     dropzoneText={"Drop Files for task or click here"}
-                    onChange={(files) => uploadFile(files)}
+                    onDelete={(e)=>removeFile(e)}
+                    onAdd={(files) => uploadFile(files)}
+                    onDrop={(files) => uploadFile(files)}
                     onAlert={(message, variant) => console.log(`${variant}: ${message}`)}
                     // fileObjects={(e)=>{uploadFile(e)}}
                     showPreviews={true}
@@ -99,7 +138,8 @@ export default function UploadFiles () {
                     previewGridProps={{container: { spacing: 1, direction: 'row' }}}
                     previewChipProps={{classes: { root: classes.previewChip } }}
                     previewText="Selected files"
-                /> </Collapse>
+                /> 
+                <Button onClick={()=>submitData()}>Submit</Button></Collapse>
                 </Box>
             </Box>
         </Box>

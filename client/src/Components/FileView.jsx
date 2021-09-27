@@ -17,6 +17,7 @@ export default function FileView (props) {
     let [ pdf, setpdf ] = useState(null)
     let [ path, setPath ] = useState(`jobs/${props.job}`)
     let [ IMG, setIMG ] = useState(null)
+    let [ job, setJob] = useState(null)
 
     let getFolders = async () => {
         let {data, config} = await axiosScript('post', '/api/files/getJobFolders', {job: props.job})
@@ -64,8 +65,19 @@ export default function FileView (props) {
     let imgCheckArr = ['.jpg', '.png', '.gif', '.webp', '.tiff', '.psd', '.raw', '.bmp', '.heif', '.indd', '.jpeg', '.svg', '.ai', '.eps']
 
     useEffect(()=>{
+        console.log('test22')
+        setPath(`jobs/${props.job}`)
+        setpdf(null)
+        setIMG(null)
         getFolders()
-    },[])
+        // setInterval(()=>{
+        //     if(job != props.job){
+        //         setJob(props.job)
+        //         console.log(props)
+        //         // getFolders()}
+        //     }
+        // },500)
+    },[props])
 
     return (
         <Box pt={5} width='100%' paddingBottom='100px' style={{ backgroundImage: `url(${FilesBG})`, backgroundSize: 'cover' }} color='white'>

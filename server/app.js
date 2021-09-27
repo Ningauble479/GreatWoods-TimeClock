@@ -9,7 +9,7 @@ import bodyParser from 'body-parser';
 import cookieparser from 'cookie-parser'
 import mongoose from 'mongoose'
 // import passport from 'passport'
-const dbRoute = 'mongodb+srv://Ningauble:Jakeybear5@reptileisland.xkr6d.gcp.mongodb.net/GreatWoods?retryWrites=true&w=majority'
+const dbRoute = process.env.DBURL
 app.use(cookieparser())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -27,11 +27,10 @@ app.use(function(req, res, next) {
 
 app.use('/api', routes);
 
-
+console.log(dbRoute)
 // Database connection
 mongoose.connect(dbRoute, {
     useCreateIndex: true,
-    useNewUrlParser: true,
     useFindAndModify: false
 });
 
@@ -51,4 +50,24 @@ const __dirname = path.dirname(__filename);
       console.log("App listening on PORT " + port);
     });
 
+    // import passcode from './models/passcodes.js'
 
+//     let newCode = new passcode ({
+//       password: 'Welcome321!',
+//       level: 'floor'
+//   })
+
+//   newCode.save((err)=>{
+//       if(err) return console.log({success: false, err: err})
+//       return console.log({success: true})
+//   })
+
+//   let newCode2 = new passcode ({
+//     password: 'Welcome123!',
+//     level: 'admin'
+// })
+
+// newCode2.save((err)=>{
+//     if(err) return console.log({success: false, err: err})
+//     return console.log({success: true})
+// })
