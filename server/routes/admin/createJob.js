@@ -17,6 +17,9 @@ export default async (req,res) => {
     newJob.superPhone = req.body.superPhone
     newJob.designer = req.body.designer
     newJob.active = true
+    newJob.finishers = req.body.finishers
+    newJob.installers = req.body.installers
+    newJob.installDate = req.body.installDate
 
 
 

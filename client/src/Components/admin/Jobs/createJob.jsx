@@ -5,6 +5,7 @@ import axiosScript from '../../../scripts/axiosScripts'
 import WorkIcon from '@material-ui/icons/Work';
 import ClientSearch from '../../reusables/clientSearch';
 import WorkerSearch from '../../reusables/workerSearch';
+import ThirdPartySearch from '../../reusables/ThirdPartySearch';
 
 
 export default function CreateJob() {
@@ -24,6 +25,9 @@ export default function CreateJob() {
     let [open, setOpen] = useState(false)
     let [alert, setAlert] = useState(null)
     let [aType, setAType] = useState(null)
+    let [finishers, setFinishers] = useState(null)
+    let [installers, setInstallers] = useState(null)
+    let [date, setDate] = useState(null)
     const [selectedClient, setSelectedClient] = useState(null)
 
 
@@ -41,7 +45,7 @@ export default function CreateJob() {
         if (!jobName || jobName === '') {
             return alertLogic('Please Add A Job Name!', 'error')
         }
-        let { data } = await axiosScript('post', '/api/admin/createJob', { selectedTemplate, jobName, client: selectedClient._id, lockBox, contractor: contractor._id, billing, supervisor: supervisor._id, superPhone, designer: designer._id })
+        let { data } = await axiosScript('post', '/api/admin/createJob', { selectedTemplate, jobName, client: selectedClient?._id, lockBox, contractor: contractor?._id, billing, supervisor: supervisor?._id, superPhone, designer: designer?._id, finishers: finishers?._id, installers: installers?._id, installDate: date })
         console.log(data.data)
         alertLogic(`Successfully Added Job ${jobName}`, 'success')
         setTemplate('')
@@ -53,6 +57,8 @@ export default function CreateJob() {
         setSupervisor('')
         setSuperPhone('')
         setDesigner('')
+        setInstallers('')
+        setFinishers('')
         setShownTemplate(null)
 
     }
@@ -76,6 +82,14 @@ export default function CreateJob() {
     let selectClient = (client) => {
         console.log(client)
         setSelectedClient(client)
+    }
+
+    let setTheDate = async(e) => {
+        let unformated = e.target.value
+        let splitSTR = unformated.split('-')
+        let fixedDate = new Date(splitSTR)
+        console.log(fixedDate)
+        setDate(fixedDate)
     }
 
     useEffect(() => {
@@ -124,6 +138,30 @@ export default function CreateJob() {
                             {/* <TextField value={contractor} style={{ width: '50%' }} id="filled-basic" label="Contractor" onChange={(e) => { setContractor(e.target.value) }} /> */}
                         </Box>
                         <Box width='100%' mb={2} display='flex' justifyContent='space-between'>
+                            <Typography style={{ alignSelf: 'flex-end' }} variant='h5'>Installers</Typography>
+                            <Box width='50%'><ThirdPartySearch
+                                withBox
+                                CB={(thirdParty) => {
+                                    console.log(thirdParty)
+                                    setInstallers(thirdParty)
+                                }}
+                                placeHolder={'Installers'}
+                            /></Box>
+                            {/* <TextField value={contractor} style={{ width: '50%' }} id="filled-basic" label="Contractor" onChange={(e) => { setContractor(e.target.value) }} /> */}
+                        </Box>
+                        <Box width='100%' mb={2} display='flex' justifyContent='space-between'>
+                            <Typography style={{ alignSelf: 'flex-end' }} variant='h5'>Finishers</Typography>
+                            <Box width='50%'><ThirdPartySearch
+                                withBox
+                                CB={(thirdParty) => {
+                                    console.log(thirdParty)
+                                    setFinishers(thirdParty)
+                                }}
+                                placeHolder={'Finshers'}
+                            /></Box>
+                            {/* <TextField value={contractor} style={{ width: '50%' }} id="filled-basic" label="Contractor" onChange={(e) => { setContractor(e.target.value) }} /> */}
+                        </Box>
+                        <Box width='100%' mb={2} display='flex' justifyContent='space-between'>
                             <Typography style={{ alignSelf: 'flex-end' }} variant='h5'>Supervisor Assigned</Typography>
                             <Box width='50%'><WorkerSearch
                                 withBox
@@ -150,6 +188,10 @@ export default function CreateJob() {
                                 placeHolder={'Designer'}
                             /></Box>
                             {/* <TextField value={designer} style={{ width: '50%' }} id="filled-basic" label="Designer" onChange={(e) => { setDesigner(e.target.value) }} /> */}
+                        </Box>
+                        <Box width='100%' mb={2} display='flex' justifyContent='space-between'>
+                            <Typography style={{ alignSelf: 'flex-end' }} variant='h5'>Install Date</Typography>
+                            <TextField type='date' style={{ width: '50%' }} id="filled-basic" label=' ' onChange={(e) => { setTheDate(e) }} />
                         </Box>
                         <Box width='100%' mb={2} mt={2} display='flex' justifyContent='space-between'>
                             <Typography style={{ alignSelf: 'flex-end' }} variant='h5'>Folder Template</Typography>

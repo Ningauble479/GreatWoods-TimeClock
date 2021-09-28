@@ -67,6 +67,17 @@ let files = [
     }
 ]
 
+let thirdParties = [
+    {
+        name: 'Add Third Party',
+        link: 'createThirdParty'
+    },
+    {
+        name: 'View Third Parties',
+        link: 'viewThirdParties'
+    }
+]
+
 export default function SideBar (){
     let [sideBarList, setSideBarList] = useState(null)
     let [mainLink, setMainLink] = useState(null)
@@ -92,6 +103,10 @@ export default function SideBar (){
         else if(url.includes('files')){
             setMainLink('files')
             setSideBarList(files)
+        }
+        else if(url.includes('thirdParties')){
+            setMainLink('thirdParties')
+            setSideBarList(thirdParties)
         }
         else {
             setMainLink(null)

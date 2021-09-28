@@ -21,6 +21,9 @@ import JobProfile from "./Jobs/jobProfile";
 import EmployeeProfile from "./Employees/EmployeeProfile";
 import UploadFiles from "./Files/UploadFiles";
 import ViewFiles from "./Files/ViewFiles";
+import CreateThirdParty from "./ThirdParties/CreateThirdParty";
+import ViewThirdParties from "./ThirdParties/ViewThirdParties";
+import ThirdPartyProfile from "./ThirdParties/ThirdPartyProfile";
 export default function AdminMain () {
 
     return (
@@ -100,6 +103,20 @@ export default function AdminMain () {
         </Route>
         <Route path='/admin/files/viewFiles'>
             <ViewFiles/>
+        </Route>
+        
+        {/* Admin Panel Third Party Routes */}
+        <Route exact path='/admin/thirdParties'>
+            <Redirect to='/admin/thirdParties/createThirdParties'/>
+        </Route>
+        <Route path='/admin/thirdParties/createThirdParty'>
+            <CreateThirdParty/>
+        </Route>
+        <Route path='/admin/thirdParties/viewThirdParties'>
+            <ViewThirdParties/>
+        </Route>
+        <Route path='/admin/thirdParties/thirdPartyProfile/:id'>
+            <ThirdPartyProfile/>
         </Route>
 
         

@@ -13,7 +13,10 @@ const jobsSchema = new Schema({
     supervisor: { type: Schema.Types.ObjectId, ref:'users' },
     superPhone: String,
     designer: { type: Schema.Types.ObjectId, ref:'users' },
-    active: Boolean
+    active: Boolean,
+    finishers: { type: Schema.Types.ObjectId, ref: 'thirdParty'},
+    installers: { type: Schema.Types.ObjectId, ref: 'thirdParty'},
+    installDate: Date
 });
 
 

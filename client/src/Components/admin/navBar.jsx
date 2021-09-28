@@ -7,6 +7,7 @@ import Work from "@material-ui/icons/Work";
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import PeopleIcon from '@material-ui/icons/People';
 import FolderIcon from '@material-ui/icons/Folder';
+import BusinessIcon from '@material-ui/icons/Business';
 export default function NavBar() {
     
     let logOut = async () => {
@@ -34,6 +35,9 @@ export default function NavBar() {
                 </Box>
                 <Box height='100%'>
                     <Link className='linkClean' to='/admin/files/uploadFiles'><Box><FolderIcon style={{fontSize: '45px'}}/><Typography variant='h5'> Files </Typography></Box></Link>
+                </Box>
+                <Box height='100%'>
+                    <Link className='linkClean' to='/admin/thirdParties/createThirdParty'><Box><BusinessIcon style={{fontSize: '45px'}}/><Typography variant='h5'> Third Parties </Typography></Box></Link>
                 </Box>
                 
                 {/* <Box>

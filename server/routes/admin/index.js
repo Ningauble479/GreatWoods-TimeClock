@@ -13,6 +13,9 @@ import UJ from './updateJob.js'
 import NC from './client/addClient.js'
 import GC from './client/getClients.js'
 import UF from './files/uploadFile.js'
+import CTP from './thirdParties/createThirdParty.js'
+import ETP from './thirdParties/editThirdParty.js'
+import GTP from './thirdParties/getThirdParties.js'
 import multer from 'multer'
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -30,18 +33,28 @@ var storage = multer.diskStorage({
 var upload = multer({
    storage: storage,
 })
+//User Routes
 routes.post('/addUser', AU)
 routes.post('/getAccounts', GA)
+//Template Routes
 routes.post('/setTemplate', ST)
 routes.get('/getTemplates', GT)
-routes.post('/createJob', CJ)
-routes.post('/getJobs', GJ)
+//Time Sheet Routes
 routes.post('/getTimeSheets', GTS)
 routes.post('/getTimeSheetDay', GTSD)
 routes.post('/getTimeSheetJob', GTSJ)
+// Job Routes
 routes.post('/updateJobs', UJ)
+routes.post('/createJob', CJ)
+routes.post('/getJobs', GJ)
+// Client Routes
 routes.post('/newClient', NC)
 routes.post('/getClients', GC)
+// File Upload Route
 routes.post('/uploadFile', upload.array('file', 3), UF)
+// Third Party Routes
+routes.post('/createThirdParty', CTP)
+routes.post('/editThirdParty', ETP)
+routes.post('/getThirdParty', GTP)
 
 export default routes;
