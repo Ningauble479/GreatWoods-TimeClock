@@ -9,7 +9,7 @@ import bodyParser from 'body-parser';
 import cookieparser from 'cookie-parser'
 import mongoose from 'mongoose'
 // import passport from 'passport'
-const dbRoute = `mongodb://${process.env.DBUSER}:${process.env.DBPASSWORD}@51.222.231.153:27017/${process.env.DBNAME}}?authSource=${process.env.DBNAME}`
+const dbRoute = `mongodb://${process.env.DBUSER}:${process.env.DBPASSWORD}@51.222.231.153:27017/${process.env.DBNAME}?authSource=${process.env.DBNAME}`
 
 app.use(cookieparser())
 app.use(bodyParser.json());
