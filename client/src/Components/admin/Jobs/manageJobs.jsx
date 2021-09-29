@@ -19,13 +19,13 @@ function JobManager (props)  {
 
     let finishJob = async (e) => {
         console.log(e.currentTarget.value)
-        let data = await axiosScript('post', '/api/admin/updateJobs', {id: e.currentTarget.value, update: {$set: {active: false}}})
+        let data = await axiosScript('post', '/api/admin/updateJobs', {id: e.currentTarget.value, update: {active: false}})
         console.log(data)
     }
 
     let reactiveJob = async (e) => {
         console.log(e.currentTarget.value)
-        let data = await axiosScript('post', '/api/admin/updateJobs', {id: e.currentTarget.value ,update: {$set: {active: true}}})
+        let data = await axiosScript('post', '/api/admin/updateJobs', {id: e.currentTarget.value, update: {active: true}})
         console.log(data)
     }
 
