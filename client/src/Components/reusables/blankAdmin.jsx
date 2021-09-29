@@ -8,13 +8,15 @@ export default function name () {
     let [open, setOpen] = useState(false)
     let [alert, setAlert] = useState(null)
     let [aType, setAType] = useState(null)
+    let [alertTimer, setAlertTimer] = useState(null)
 
 
-    let alertLogic = (message, type) => {
+    let alertLogic = (message, type, time) => {
+        clearTimeout(alertTimer)
         setAlert(message)
         setAType(type)
         setOpen(true)
-        setTimeout(()=>{setOpen(false)},3000)
+        setAlertTimer(setTimeout(() => { setOpen(false) }, time))
     }
 
     useEffect(()=>{

@@ -103,7 +103,7 @@ export default function CreateFolderTemplates () {
             </Table>
             </Box>
             <Box flex='1' display='flex' flexDirection='column' p={5}>
-                <Box width='100%' mb={5} display='flex' justifyContent='space-between'><Typography variant='h5'>Template Name</Typography><TextField style={{width: '70%'}} id="filled-basic" label="Task Name" onKeyDown={(e)=>{if(e.key === 'Enter') setTemplate()}} value={templateName} onChange={(e)=>{setTemplateName(e.target.value)}} /></Box>
+                <Box width='100%' mb={5} display='flex' justifyContent='space-between'><Typography variant='h5'>Template Name</Typography><TextField style={{width: '70%'}} id="filled-basic" label="Template Name" onKeyDown={(e)=>{if(e.key === 'Enter') setTemplate()}} value={templateName} onChange={(e)=>{setTemplateName(e.target.value)}} /></Box>
                 <Box width='100%' display='flex' justifyContent='center' borderBottom='1px solid gray' pb={2}><Button variant='outlined' onClick={()=>{setTemplate()}}>Create Template</Button></Box>
             </Box>
         </Box>

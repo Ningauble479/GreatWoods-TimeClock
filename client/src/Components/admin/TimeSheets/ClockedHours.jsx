@@ -84,6 +84,12 @@ export default function ClockedHours () {
         return newTime
     }
 
+    let formatWeek = () => {
+        if(!weekFNS || weekFNS.length < 4)return
+        let i = weekFNS.length -1
+        return `${weekFNS[0]} - ${weekFNS[i]}`
+    }
+
     useEffect(()=>{
         let weekStart = format(startOfWeek(new Date(), {weekStartsOn: 1}), 'MM dd yyyy')
         let weekEnd = format(endOfWeek(new Date(), {weekStartsOn: 1}), 'MM dd yyyy')
@@ -122,7 +128,7 @@ export default function ClockedHours () {
             </Select>
         </FormControl>
         <Typography>Day Picked: {dateFNS}</Typography>
-        <Typography>Week Picked: {weekFNS}</Typography>
+        <Typography>Week Picked: {formatWeek()}</Typography>
         </Box>
             <Box width='100%' display='flex' justifyContent='center' mt={2}>
                 <Calendar

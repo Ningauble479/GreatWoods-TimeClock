@@ -21,6 +21,7 @@ export default function CreateThirdParty () {
     }
 
     let addThirdParty = async () => {
+        if(!company || !address || !email || !phone)return alertLogic('Please fill in all information', 'error')
         let thirdPartyData = {
             company: company,
             address: address,
@@ -31,6 +32,7 @@ export default function CreateThirdParty () {
         if(!data.success){
             return alertLogic('An error has occured please try again', 'error')
         }
+        alert('Third party successfully created.', 'success')
     }
 
     useEffect(()=>{
