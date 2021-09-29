@@ -5,7 +5,7 @@ import FileView from './FileView'
 import axiosScript from "../scripts/axiosScripts";
 import { Link } from 'react-router-dom'
 import { format,  parseISO } from 'date-fns'
-import bigLogo from '../images/bigLogo.svg'
+import bigLogo from '../images/bigLogo.png'
 import HeaderIMG from '../images/04.jpg'
 import 'react-multi-carousel/lib/styles.css';
 import AnalogueClock from 'react-analogue-clock';

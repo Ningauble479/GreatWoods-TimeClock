@@ -15,7 +15,7 @@ export default function NavBar() {
         window.location.reload()
     }
     return (
-        <AppBar position="static">
+        <AppBar position="static" style={{backgroundColor: '#EC4E4F'}}>
           <Toolbar style={{display: 'flex', justifyContent: 'space-between'}}>
             <Link className='linkClean' to='/main'>
                 <Box width='100px'><img src={LogoImg} style={{maxWidth: '150px'}} /></Box> 

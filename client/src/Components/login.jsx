@@ -2,7 +2,7 @@ import { Box, Button, TextField, Collapse, Typography } from "@material-ui/core"
 import { useState } from "react";
 import axiosScript from "../scripts/axiosScripts";
 import { Alert } from '@material-ui/lab'
-import bigLogo from '../images/bigLogo.svg'
+import bigLogo from '../images/bigLogo.png'
 
 export default function Login () {
     let [passcode, setPass] = useState(null)
