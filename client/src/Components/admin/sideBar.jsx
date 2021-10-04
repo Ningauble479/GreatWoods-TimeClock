@@ -78,6 +78,40 @@ let thirdParties = [
     }
 ]
 
+let inventoryList = [
+    {
+        name: 'Create Purchase Orders',
+        link: 'createPurchaseOrders'
+    },
+    {
+        name: 'View Purchase Orders',
+        link: 'viewPurchaseOrders'
+    },
+    {
+        name: 'Create Item',
+        link: 'createItem'
+    },
+    {
+        name: 'View Items',
+        link: 'viewItems'
+    },
+    {
+        name: 'Receive Items',
+        link: 'receiveItems'
+    }
+]
+
+let contractsList = [
+    {
+        name: 'New Contract',
+        link: 'newContract'
+    },
+    {
+        name: 'View Contracts',
+        link: 'viewContracts'
+    }
+]
+
 export default function SideBar (){
     let [sideBarList, setSideBarList] = useState(null)
     let [mainLink, setMainLink] = useState(null)
@@ -107,6 +141,14 @@ export default function SideBar (){
         else if(url.includes('thirdParties')){
             setMainLink('thirdParties')
             setSideBarList(thirdParties)
+        }
+        else if(url.includes('inventory')){
+            setMainLink('inventory')
+            setSideBarList(inventoryList)
+        }
+        else if(url.includes('contracts')){
+            setMainLink('contracts')
+            setSideBarList(contractsList)
         }
         else {
             setMainLink(null)

@@ -8,6 +8,9 @@ import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import PeopleIcon from '@material-ui/icons/People';
 import FolderIcon from '@material-ui/icons/Folder';
 import BusinessIcon from '@material-ui/icons/Business';
+import AllInboxIcon from '@material-ui/icons/AllInbox';
+import DescriptionIcon from '@material-ui/icons/Description';
+
 export default function NavBar() {
     
     let logOut = async () => {
@@ -15,7 +18,7 @@ export default function NavBar() {
         window.location.reload()
     }
     return (
-        <AppBar position="static" style={{backgroundColor: '#EC4E4F'}}>
+        <AppBar position="static" style={{backgroundColor: '#242526'}}>
           <Toolbar style={{display: 'flex', justifyContent: 'space-between'}}>
             <Link className='linkClean' to='/main'>
                 <Box width='100px'><img src={LogoImg} style={{maxWidth: '150px'}} /></Box> 
@@ -38,6 +41,12 @@ export default function NavBar() {
                 </Box>
                 <Box height='100%'>
                     <Link className='linkClean' to='/admin/thirdParties/createThirdParty'><Box><BusinessIcon style={{fontSize: '45px'}}/><Typography variant='h5'> Third Parties </Typography></Box></Link>
+                </Box>
+                <Box height='100%'>
+                    <Link className='linkClean' to='/admin/inventory/createPurchaseOrders'><Box><AllInboxIcon style={{fontSize: '45px'}}/><Typography variant='h5'> Inventory </Typography></Box></Link>
+                </Box>
+                <Box height='100%'>
+                    <Link className='linkClean' to='/admin/contracts/newContract'><Box><DescriptionIcon style={{fontSize: '45px'}}/><Typography variant='h5'> Contracts </Typography></Box></Link>
                 </Box>
                 
                 {/* <Box>
