@@ -37,7 +37,7 @@ export default function Login () {
             <Box height='300px' width='500px' border='1px solid gray' boxShadow='1' borderRadius='15px' display='flex' justifyContent='space-around' alignItems='center' flexDirection='column'>
             <Typography variant='h3'>Login</Typography>
             <Typography> This is a live demo. Any changes will appear for everyone so please dont leave personal information on this demo. Password is Demo555!  </Typography>
-            <Collapse in={open}>
+            <Collapse in={open} style={{position: 'fixed', top:'0', left: '0', width: '100%', zIndex: '1100'}}>
                         <Alert severity={!aType ? 'success' : aType}>{alert}</Alert>
             </Collapse>
             <TextField label="Password" onKeyPress={(e)=>{if(e.key === 'Enter') setPasscode()}} onChange={(e)=>{setPass(e.target.value)}} />

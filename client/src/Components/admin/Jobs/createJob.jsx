@@ -100,7 +100,7 @@ export default function CreateJob() {
     return (
 
         <Box flex='1'>
-            <Collapse in={open}>
+            <Collapse in={open} style={{position: 'fixed', top:'0', left: '0', width: '100%', zIndex: '1100'}}>
                 <Alert severity={!aType ? 'success' : aType}>{alert}</Alert>
             </Collapse>
             <Box flex='1'>

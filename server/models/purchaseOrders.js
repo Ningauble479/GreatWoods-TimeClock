@@ -4,9 +4,8 @@ const { Schema } = mongoose;
 const purchaseOrdersSchema = new Schema({
     name: String,
     Card: String,
-    cost: Number,
     tax: Number,
-    taxType: String, //ex % or exact amount
+    taxType: String, //ex percent or exact
     date: Date,
     warehouse: String,
     msg: String,
@@ -14,7 +13,8 @@ const purchaseOrdersSchema = new Schema({
     status: String,
     shipTo: {type: Schema.Types.ObjectId, ref: 'users'},
     total: Number,
-    purchaser: {type: Schema.Types.ObjectId, ref}
+    items: [{type: Schema.Types.ObjectId, ref: 'inventory'}],
+    purchaser: {type: Schema.Types.ObjectId, ref: 'users'}
 });
 
 

@@ -15,7 +15,7 @@ export default function ShowPDF (props) {
             setWidth(ref.current.offsetWidth)
             setHeight(ref.current.clientHeight)
         }
-    })
+    },[])
     return (
         
         <div style={{flex:'1', display: 'flex', flexDirection:'column', alignContent: 'center', justifyItems: 'center'}} ref={ref}>

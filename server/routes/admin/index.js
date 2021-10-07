@@ -16,7 +16,15 @@ import UF from './files/uploadFile.js'
 import CTP from './thirdParties/createThirdParty.js'
 import ETP from './thirdParties/editThirdParty.js'
 import GTP from './thirdParties/getThirdParties.js'
+import CI from './inventory/createItem.js'
+import CPO from './inventory/createPurchaseOrder.js'
+import GI from './inventory/getItem.js'
+import GPO from './inventory/getPurchaseOrder.js'
+import EI from './inventory/editItem.js'
 import multer from 'multer'
+
+
+
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
         
@@ -33,6 +41,7 @@ var storage = multer.diskStorage({
 var upload = multer({
    storage: storage,
 })
+
 //User Routes
 routes.post('/addUser', AU)
 routes.post('/getAccounts', GA)
@@ -56,5 +65,11 @@ routes.post('/uploadFile', upload.array('file', 3), UF)
 routes.post('/createThirdParty', CTP)
 routes.post('/editThirdParty', ETP)
 routes.post('/getThirdParty', GTP)
+// Inventory Routes
+routes.post('/createItem', CI)
+routes.post('/createPurchaseOrder', CPO)
+routes.post('/getItem', GI)
+routes.post('/getPurchaseOrder', GPO)
+routes.post('/editItem', EI)
 
 export default routes;

@@ -31,13 +31,15 @@ import ViewItems from "./items/ViewItems";
 import RecieveItems from "./items/RecieveItems";
 import ItemProfile from "./items/ItemProfile";
 import PurchaseOrderProfile from "./items/PurchaseOrderProfile";
-export default function AdminMain() {
+import useCheckForMobileScreen from '../hooks/useCheckMobileScreen'
 
+export default function AdminMain() {
+    let mobile = useCheckForMobileScreen()
     return (
         <Box height='100vh' display='flex' flexDirection='column'>
-            <NavBar />
+            {mobile ? null : <NavBar />}
             <Box style={{ flex: '1' }} display='flex' flexDirection='row'>
-                <SideBar />
+                {mobile ? null : <SideBar />}
                 <Route exact path='/admin'>
                     <Redirect to='/admin/accounts/newEmployee' />
                 </Route>
@@ -151,7 +153,7 @@ export default function AdminMain() {
                 <Route path='/admin/inventory/itemProfile/:id'>
                     <ItemProfile/>
                 </Route>
-                <Route path='/admin/inventory/purchaseOrderProfile'>
+                <Route path='/admin/inventory/purchaseOrderProfile/:id'>
                     <PurchaseOrderProfile/>
                 </Route>
 

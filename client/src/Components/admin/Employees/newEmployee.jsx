@@ -48,7 +48,7 @@ export default function NewEmployee () {
 
     return (
         <Box style={{flex: '1'}}>
-                    <Collapse in={open}>
+                    <Collapse in={open} style={{position: 'fixed', top:'0', left: '0', width: '100%', zIndex: '1100'}}>
                         <Alert severity={!aType ? 'success' : aType}>{alert}</Alert>
                     </Collapse>
             <Box display='flex' flexDirection='row' justifyContent='flex-start' alignItems='center' pl={5} pt={3} pb={3} borderBottom='1px solid gray'>
