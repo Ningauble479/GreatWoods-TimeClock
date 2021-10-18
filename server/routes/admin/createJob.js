@@ -3,6 +3,7 @@ import fs from 'fs'
 import templates from '../../models/jobTemplates.js'
 import client from '../../models/customers.js'
 export default async (req,res) => {
+    try {
     let newJob = new jobs()
 
     newJob.folderTemplate = req.body.selectedTemplate
@@ -40,7 +41,9 @@ export default async (req,res) => {
         client.findOneAndUpdate({_id: req.body.client}, {$push: {jobs: data._id}}).exec()
         if(err) return res.json({success: false, err: err})
         return res.json({success: true, data: data})
-    })
+    })} catch (err){
+        if(err)console.log(err)
+    }
 
 
 }

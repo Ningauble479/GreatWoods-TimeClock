@@ -54,7 +54,7 @@ const __dirname = path.dirname(__filename);
 //     import passcode from './models/passcodes.js'
 
 //     let newCode = new passcode ({
-//       password: 'Welcome321!',
+//       password: 'Demo333!',
 //       level: 'floor'
 //   })
 
@@ -64,7 +64,7 @@ const __dirname = path.dirname(__filename);
 //   })
 
 //   let newCode2 = new passcode ({
-//     password: 'Welcome123!',
+//     password: 'Demo555!',
 //     level: 'admin'
 // })
 
