@@ -4,6 +4,7 @@ import templates from '../../models/jobTemplates.js'
 import client from '../../models/customers.js'
 export default async (req,res) => {
     try {
+    console.log('creating job')
     let newJob = new jobs()
 
     newJob.folderTemplate = req.body.selectedTemplate
@@ -25,13 +26,14 @@ export default async (req,res) => {
 
 
     let data = await templates.findOne({_id: req.body.selectedTemplate})
+    console.log(data)
     data.folders.map((row)=>{
         let directory = `jobs/${req.body.jobName}/${row.folderName}/`
         if(!row.nestedFolders){
-            fs.mkdirSync(directory, {recursive: true})
+            try{fs.mkdirSync(directory, {recursive: true})}catch(err){console.log(err)}
         } else {
         row.nestedFolders.map((row)=>{
-            fs.mkdirSync(directory + row, {recursive: true})
+            try{fs.mkdirSync(directory + row, {recursive: true})}catch(err){console.log(err)}
         })}
     })
 
