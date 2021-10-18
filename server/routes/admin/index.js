@@ -16,6 +16,7 @@ import UF from './files/uploadFile.js'
 import CTP from './thirdParties/createThirdParty.js'
 import ETP from './thirdParties/editThirdParty.js'
 import GTP from './thirdParties/getThirdParties.js'
+import EDITC from './client/editClient.js'
 import multer from 'multer'
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -50,6 +51,7 @@ routes.post('/getJobs', GJ)
 // Client Routes
 routes.post('/newClient', NC)
 routes.post('/getClients', GC)
+routes.post('/editClient', EDITC)
 // File Upload Route
 routes.post('/uploadFile', upload.array('file', 3), UF)
 // Third Party Routes

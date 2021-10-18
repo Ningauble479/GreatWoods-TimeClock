@@ -1,16 +1,18 @@
-import { Box, Collapse, Table, Typography, TableBody, TableRow, TableCell, TableHead } from '@material-ui/core'
+import { Box, Collapse, Tooltip, Button, Table, Typography, TableBody, TableRow, TableCell, TableHead } from '@material-ui/core'
 import { useEffect, useState } from 'react'
 import { Alert } from '@material-ui/lab'
 import axiosScript from '../../../scripts/axiosScripts'
 import {Link, useParams} from 'react-router-dom'
 import RemoveRedEyeIcon from '@material-ui/icons/RemoveRedEye';
 import PersonIcon from '@material-ui/icons/Person';
+import EditIcon from '@material-ui/icons/Edit';
  
 export default function EmployeeProfile () {
     let [open, setOpen] = useState(false)
     let [alert, setAlert] = useState(null)
     let [aType, setAType] = useState(null)
     let [employee, setEmployee] = useState(null)
+    let [editing, setEditing] = useState(false)
     let { id } = useParams()
 
     let alertLogic = (message, type) => {
@@ -26,6 +28,10 @@ export default function EmployeeProfile () {
         setEmployee(data.data[0])
     }
 
+    let saveData = async () => {
+        console.log('Nice')
+    }
+
     useEffect(()=>{
         GetEmployee()
         console.log('Get your data here')
@@ -39,6 +45,14 @@ export default function EmployeeProfile () {
             </Collapse>
             <Box display='flex' flexDirection='row' justifyContent='flex-start' alignItems='center' pl={5} pt={3} pb={3} borderBottom='1px solid gray'>
                 <PersonIcon style={{fontSize: '52px', marginRight: '15px'}}/><Typography variant='h5'>{!employee ? 'Loading...' : employee.userName}</Typography>
+                <Box justifySelf='flex-end' pl={3} >
+                    {!editing ? <Tooltip className='linkClean' title='Edit Job'><EditIcon onClick={() => {
+                        alertLogic('You are now editing', 'warning', 10000)
+                        setEditing(true)}} style={{ justifySelf: 'flex-end' }} /></Tooltip> : <Button onClick={() => {saveData()}}>Save</Button>}
+                </Box>
+                <Box>
+                    {!editing ? null : <Button onClick={()=>setEditing(false)}>Cancel</Button>}
+                </Box>
             </Box>
             <Box flex='1' display='flex' flexDirection='column' justifyContent='center' alignItems='center' p={5} m={5}>
                 <Table style={{width:'90%'}}>
