@@ -4,8 +4,9 @@ import { Alert } from '@material-ui/lab'
 import axiosScript from '../../../scripts/axiosScripts'
 import WorkIcon from '@material-ui/icons/Work';
 import AllInbox from '@material-ui/icons/AllInbox';
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import RemoveRedEyeIcon from '@material-ui/icons/RemoveRedEye'
+import { format, parseISO } from 'date-fns';
 
 export default function ViewItems () {
     let [open, setOpen] = useState(false)
@@ -13,6 +14,8 @@ export default function ViewItems () {
     let [aType, setAType] = useState(null)
     let [alertTimer, setAlertTimer] = useState(null)
     let [items, setItems] = useState(null)
+
+    let location = useLocation()
 
     let alertLogic = (message, type, time) => {
         clearTimeout(alertTimer)
@@ -27,9 +30,19 @@ export default function ViewItems () {
         setItems(data.data)
     }
 
+    let cleanDate = (date) => {
+        let parsed = parseISO(date)
+        return format(parsed, 'EEEE MMMM do yyyy')
+    }
+
+    let checkLocation = async () => {
+        console.log(location)
+    }
+
     useEffect(()=>{
         console.log('Get your data here')
         getItems()
+        checkLocation()
     },[])
 
     return (
@@ -59,13 +72,13 @@ export default function ViewItems () {
                             !items ? <TableRow style={{width: '100%'}}><TableCell>Loading...</TableCell></TableRow> : items.map((row)=>{
                             return (<TableRow>
                             <TableCell>{row.name}</TableCell>
-                            <TableCell>{row.tags.map((tag, i)=>{
+                            <TableCell>{!row.tags ? 'No Tags Added' : row.tags.length<1 ? 'No Tags Added' : row.tags.map((tag, i)=>{
                                 if(i>2)return null
                                 return <Box>{tag}</Box>
                             })}</TableCell>
                             <TableCell>{row.dateRecieved ? 'Yes' : 'No'}</TableCell>
                             <TableCell>{row.inStock ? 'Yes' : 'No'}</TableCell>
-                            <TableCell>{row.cost}</TableCell>
+                            <TableCell>{`$${row.cost}`}</TableCell>
                             <TableCell>{row.sku} </TableCell>
                             <TableCell><Link to={`/admin/inventory/itemProfile/${row._id}`}><RemoveRedEyeIcon/></Link></TableCell>
                         </TableRow>)})}

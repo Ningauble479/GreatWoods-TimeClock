@@ -94,10 +94,6 @@ let inventoryList = [
     {
         name: 'View Items',
         link: 'viewItems'
-    },
-    {
-        name: 'Receive Items',
-        link: 'receiveItems'
     }
 ]
 

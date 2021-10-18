@@ -6,6 +6,7 @@ import WorkIcon from '@material-ui/icons/Work';
 import AllInbox from '@material-ui/icons/AllInbox';
 import { Link } from 'react-router-dom'
 import RemoveRedEyeIcon from '@material-ui/icons/RemoveRedEye';
+import { format, parseISO } from 'date-fns';
 
 export default function ViewPurchaseOrders () {
     let [open, setOpen] = useState(false)
@@ -28,6 +29,11 @@ export default function ViewPurchaseOrders () {
         setPurchaseOrders(data.data)
     }
 
+    let cleanDate = (date) => {
+        let parsed = parseISO(date)
+        return format(parsed, 'EEEE MMMM do yyyy')
+    }
+
     useEffect(()=>{
         console.log('Get your data here')
         getPurchaseOrder()
@@ -47,7 +53,9 @@ export default function ViewPurchaseOrders () {
                         <TableRow>
                             <TableCell>Name</TableCell>
                             <TableCell>Date</TableCell>
+                            <TableCell>Status</TableCell>
                             <TableCell>Purchaser</TableCell>
+
                             <TableCell></TableCell>
                         </TableRow>
                     </TableHead>
@@ -56,8 +64,9 @@ export default function ViewPurchaseOrders () {
                             return (                        
                             <TableRow>
                                 <TableCell>{row.name}</TableCell>
-                                <TableCell>{row.date}</TableCell>
-                                <TableCell>{row.purchaser.name}</TableCell>
+                                <TableCell>{cleanDate(row.date)}</TableCell>
+                                <TableCell>{row.status}</TableCell>
+                                <TableCell>{!row.purchaser ? 'None Specified' : row.purchaser.userName}</TableCell>
                                 <TableCell><Link to={`/admin/inventory/purchaseOrderProfile/${row._id}`}><RemoveRedEyeIcon/></Link></TableCell>
                             </TableRow>)
                         })

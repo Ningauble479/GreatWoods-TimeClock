@@ -114,8 +114,12 @@ export default function ItemProfile () {
                         </TableRow>
                     </TableBody>
                 </Table>
-                <Box>
-                    {item.tags}
+                <Box display='flex'>
+                    {item.tags.map((row)=>{
+                        return (
+                            <Link to='/admin/inventory/viewItems' className='linkClean' state={{tagSearch: row}}><Box pt={1} pb={1} pl={2} pr={2} m={3} bgcolor='lightblue' borderRadius='15px'>{row}</Box></Link>
+                        )
+                    })}
                 </Box>
                 <Box pt={5} mt={5} mb={5} pb={5}>
                 <QRCode value={`https://${window.location.hostname}/admin/inventory/itemProfile/${id}`}/>

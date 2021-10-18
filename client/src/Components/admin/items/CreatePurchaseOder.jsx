@@ -6,6 +6,7 @@ import AllInbox from '@material-ui/icons/AllInbox';
 import WorkerSearch from '../../reusables/workerSearch';
 import ClientSearch from '../../reusables/clientSearch';
 import ItemDialog from './itemDialog';
+import MultiItemDialog from './multiItemDialog';
 
 export default function CreatePurchaseOrders() {
     let [open, setOpen] = useState(false)
@@ -28,6 +29,8 @@ export default function CreatePurchaseOrders() {
     let [itemAddAmount, setItemAddAmount] = useState(1)
     let [editBoxOpen, setEditBoxOpen] = useState(false)
     let [editBoxItem, setEditBoxItem] = useState(null)
+    let [multiBoxOpen, setMultiBoxOpen] = useState(false)
+    let [copyTags, setCopyTags] = useState(null)
 
 
     let alertLogic = (message, type, time) => {
@@ -36,6 +39,12 @@ export default function CreatePurchaseOrders() {
         setAType(type)
         setOpen(true)
         setAlertTimer(setTimeout(() => { setOpen(false) }, time))
+    }
+
+    let copyTagsFunc = async (tags) => {
+        if(!tags) return alertLogic('No tags to copy.', 'error', 5000)
+        alertLogic('Tags succesfully copied!', 'success', 5000)
+        setCopyTags(tags)
     }
 
     let addPurchaseOrder = async () => {
@@ -107,36 +116,58 @@ export default function CreatePurchaseOrders() {
 
     let addItem = async () => {
         if(!itemAddName || itemAddName === '')return alertLogic('Please Set A Name For Item To Add', 'error', 3000)
+        setMultiBoxOpen(true)
+        
+    }
+
+    let finishItem = async (item, baseSKU, lastSKU) => {
         let itemsToAdd = []
         let index = Array.isArray(items) ? items.length : 0
+        console.log(item)
+        if(baseSKU){
+        console.log('CheckingSKUS')
+        let {data} = await axiosScript('post', '/api/admin/getSKU', {search: {SKU: baseSKU}})
+        if(data.data){
+            console.log('skuFound')
+            
+        }
+        else {
+            console.log(data)
+            console.log('skuNotFound')
+        }
+        }
+        let skuTrack = lastSKU
         for(let i=0; i<itemAddAmount; i++){
+            let newSKU = `${baseSKU}${skuTrack < 10 ? "00"+(skuTrack+1) : skuTrack < 100 ? "0"+(skuTrack+1) : skuTrack+1}`
+            // 
             let itemTemplate = {
                 name: itemAddName,
-                details: null,
+                details: item.details,
                 purchaseID: null,
-                soldTo: null,
-                additionalInfo: null,
+                soldTo: item.soldTo,
+                additionalInfo: item.additionalInfo,
                 dateEntered: new Date(),
                 inStock: false,
-                cost: null,
-                tax: null,
-                total: null,
-                sku: null,
-                tags: [],
+                cost: item.cost,
+                sku: newSKU,
+                tags: item.tags,
                 index: index,
             }
             index++
+            skuTrack++
             itemsToAdd.push(itemTemplate)
         }
         let oldArray = items
         if(!oldArray){
+            setItemAddName('')
+            setMultiBoxOpen(false)
             return setItems(itemsToAdd)
         } else {
             oldArray.push(...itemsToAdd)
             setItems(oldArray)
     }
         setItemAddName('')
-        
+        setMultiBoxOpen(false)
     }
 
     let closeDialog = (item, skuErr) => {
@@ -177,7 +208,8 @@ export default function CreatePurchaseOrders() {
 
     return (
         <Box flex='1'>
-            <ItemDialog item={editBoxItem} open={editBoxOpen} onClose={(e, sku)=>{closeDialog(e, sku)}} updateItem={updateItem}/>
+            <ItemDialog item={editBoxItem} copiedTags={copyTags} open={editBoxOpen} copyTags={(tags)=>{copyTagsFunc(tags)}} onClose={(e, sku)=>{closeDialog(e, sku)}} updateItem={updateItem}/>
+            <MultiItemDialog itemAddName={itemAddName} copiedTags={copyTags} open={multiBoxOpen} copyTags={(tags)=>copyTagsFunc(tags)} onClose={(item, baseSKU, lastSKU)=>{finishItem(item, baseSKU, lastSKU)}} finishItem={finishItem}/>
             <Collapse in={open} style={{position: 'fixed', top:'0', left: '0', width: '100%', zIndex: '1100'}}>
                 <Alert severity={!aType ? 'success' : aType}>{alert}</Alert>
             </Collapse>

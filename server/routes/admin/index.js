@@ -21,6 +21,10 @@ import CPO from './inventory/createPurchaseOrder.js'
 import GI from './inventory/getItem.js'
 import GPO from './inventory/getPurchaseOrder.js'
 import EI from './inventory/editItem.js'
+import EPO from './inventory/editPurchaseOrder.js'
+import ADDS from './skus/addSku.js'
+import EDITS from './skus/editSku.js'
+import GETS from './skus/getSku.js'
 import multer from 'multer'
 
 
@@ -71,5 +75,9 @@ routes.post('/createPurchaseOrder', CPO)
 routes.post('/getItem', GI)
 routes.post('/getPurchaseOrder', GPO)
 routes.post('/editItem', EI)
-
+routes.post('/editPurchaseOrder', EPO)
+// SKU Routes
+routes.post('/addSKU', ADDS)
+routes.post('/editSKU', EDITS)
+routes.post('/getSKU', GETS)
 export default routes;

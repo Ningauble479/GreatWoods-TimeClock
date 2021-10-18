@@ -11,7 +11,7 @@ const purchaseOrdersSchema = new Schema({
     msg: String,
     internalmsg: String,
     status: String,
-    shipTo: {type: Schema.Types.ObjectId, ref: 'users'},
+    shipTo: {type: Schema.Types.ObjectId, ref: 'customers'},
     total: Number,
     items: [{type: Schema.Types.ObjectId, ref: 'inventory'}],
     purchaser: {type: Schema.Types.ObjectId, ref: 'users'}

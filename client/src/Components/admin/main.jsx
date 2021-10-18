@@ -28,7 +28,6 @@ import CreatePurchaseOrders from "./items/CreatePurchaseOder";
 import ViewPurchaseOrders from "./items/ViewPurchaseOrders";
 import CreateItem from "./items/CreateItem";
 import ViewItems from "./items/ViewItems";
-import RecieveItems from "./items/RecieveItems";
 import ItemProfile from "./items/ItemProfile";
 import PurchaseOrderProfile from "./items/PurchaseOrderProfile";
 import useCheckForMobileScreen from '../hooks/useCheckMobileScreen'
@@ -146,9 +145,6 @@ export default function AdminMain() {
                 </Route>
                 <Route path='/admin/inventory/viewItems'>
                     <ViewItems/>
-                </Route>
-                <Route path='/admin/inventory/receiveItems'>
-                    <RecieveItems/>
                 </Route>
                 <Route path='/admin/inventory/itemProfile/:id'>
                     <ItemProfile/>
